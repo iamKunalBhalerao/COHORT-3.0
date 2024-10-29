@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Gilroy;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 4vw;
+  text-align: center;
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 30%;
+}
+
+#todocount {
+  font-size: 2vw;
+  color: rgb(61, 61, 61);
+  padding: 1vw 0 0 0;
+  border-bottom: 1px solid black;
+}
+
+#title {
+  padding: 0.5vw 1.5vw 0.5vw 0.5vw;
+  border: none;
+  border-radius: 5px;
+  margin: 1vw 0;
+  box-shadow: 0px 2px 10px 1px gray;
+}
+
+button {
+  background-color: rgb(0, 149, 255);
+  padding: 0.5vw;
+  margin-left: 1vw;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 2px 10px 1px gray;
+  cursor: pointer;
+}
+
+#todos {
+  width: 100%;
+  padding: 2vw 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#todos h4 {
+  text-align: left;
+  padding: 1.5vw;
+  background-color: rgb(245, 255, 255);
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgb(0, 149, 255);
+  margin-bottom: 0.5vw;
+}
+
+#todos h2 {
+  color: rgb(149, 149, 149);
+  font-size: 4vw;
+}
