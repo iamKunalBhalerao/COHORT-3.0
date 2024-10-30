@@ -1,16 +1,12 @@
 {
-  "name": "week-3",
+  "name": "week-4",
   "version": "1.0.0",
-  "main": "js1.js",
-  "type": "module",
+  "main": "index.js",
   "scripts": {
-    "start": "node js1.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "kunal bhalerao",
+  "author": "",
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "chalk": "^5.3.0"
-  }
+  "description": ""
 }

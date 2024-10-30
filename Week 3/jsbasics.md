@@ -1,6 +1,6 @@
 # Learning basics of JavaScript
 
-    whatr is javascript
+    what is javascript
     how javascript works under the hood
     how to we use javascript at the backend of our application
     syntax of javascript
