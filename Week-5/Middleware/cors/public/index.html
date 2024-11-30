@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cors video</title>
+
+
+</head>
+
+<body>
+    <input type="text" id="a" placeholder="First value">
+    <input type="text" id="b" placeholder="Second value">
+
+    <button onclick="sumRequest()">Sum</button>
+
+    <!-- Javascript Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        async function sumRequest() {
+            const a = document.getElementById('a').vlaue
+            const b = document.getElementById('b').value
+            const response = await axios.post('http://localhost:3000/sum', {
+                a: a,
+                b: b
+            })
+            console.log(response.data);
+
+        }
+        // sumRequest();
+    </script>
+</body>
+
+</html>
