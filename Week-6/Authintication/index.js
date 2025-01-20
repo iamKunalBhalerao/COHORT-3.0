@@ -1,7 +1,7 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const app = express();
-const jwt_pass = "thisisjwtpassword";
+const jwt = require("jsonwebtoken");
+const jwt_password = "Thisispasswordprotected";
 app.use(express.json());
 
 const users = [];
@@ -10,54 +10,50 @@ app.post("/signup", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  const user = users.find((user) => user.username === username);
+  users.push({
+    username,
+    password,
+  });
 
-  if (user) {
-    res.json({
-      msg: "User Already Exists!!!",
-    });
-  } else {
-    users.push({
-      username,
-      password,
-    });
-    res.json({
-      message: "You have signed up",
-    });
-  }
+  res.status(200).json({
+    msg: "You have signed up",
+  });
 });
 
 app.post("/signin", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  const user = users.find(
-    (user) => user.username === username && user.password === password
-  );
+  const user = users.find((user) => user.username === username);
 
   if (user) {
-    const token = jwt.sign({ username: username }, jwt_pass);
+    const token = jwt.sign({ username }, jwt_password);
     res.status(200).json({
       token,
     });
   } else {
     res.status(403).json({
-      msg: "Invalid Credintials",
+      msg: "Invalid Crendentials!!!",
     });
   }
 });
 
 app.use((req, res, next) => {
-  const token = req.headers.authorization;
-  const decodedData = jwt.verify(token, jwt_pass);
-  const username = decodedData.username;
+  console.log("Request Method : " + req.method);
+  next();
+});
 
-  if (username) {
-    req.username = username;
+app.use((req, res, next) => {
+  const token = req.headers.authorization;
+  const userDetails = jwt.verify(token, jwt_password);
+
+  if (userDetails.username) {
+    req.username = userDetails.username;
+    console.log("You are Logged in");
     next();
   } else {
-    res.json({
-      msg: "you are not logged in",
+    res.status(403).json({
+      msg: "You are not Logged IN",
     });
   }
 });
@@ -65,12 +61,18 @@ app.use((req, res, next) => {
 app.get("/me", (req, res) => {
   const user = users.find((user) => user.username === req.username);
 
-  res.send({
+  res.status(200).json({
     username: user.username,
     password: user.password,
   });
 });
 
+app.get("/just", (req, res) => {
+  res.json({
+    msg: "This is just try for fun",
+  });
+});
+
 app.listen(3000, () => {
-  console.log("server is on OPRT:3000");
+  console.log("server is on PORT:3000");
 });
