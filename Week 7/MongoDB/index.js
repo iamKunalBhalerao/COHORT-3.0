@@ -4,9 +4,7 @@ const { auth, jwt_password } = require("./auth");
 const { UserModel, TodoModel } = require("./db");
 const mongoose = require("mongoose");
 
-mongoose.connect(
-  "mongodb+srv://kunalbhalerao789:kunal%400987654321@cluster01.hm8ab.mongodb.net/todo-app-database"
-);
+mongoose.connect("");
 
 const app = express();
 app.use(express.json());
