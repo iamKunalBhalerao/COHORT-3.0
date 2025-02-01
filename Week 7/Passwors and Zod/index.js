@@ -44,7 +44,7 @@ app.post("/signup", async (req, res) => {
 
   if (!parsedDatawithSuccess.success) {
     res.status(403).json({
-      message: "Invalid email or password",
+      message: "Invalid email or password 🤬",
       error: parsedDatawithSuccess.error.errors,
     });
     return;
@@ -83,7 +83,7 @@ app.post("/signin", async (req, res) => {
 
   if (!user) {
     res.status(403).json({
-      message: "Your credentials are Invalid",
+      message: "Your credentials are Invalid 🤬",
     });
   }
 
@@ -96,7 +96,7 @@ app.post("/signin", async (req, res) => {
     });
   } else {
     res.status(403).json({
-      message: "Invalid Credintials",
+      message: "Invalid Credintials 🤬",
     });
   }
 });
@@ -115,6 +115,7 @@ app.post("/todo", auth, async (req, res) => {
   });
 
   res.status(200).json({
+    message: "Todo created successfuly 👏",
     todo,
   });
 });
@@ -129,10 +130,6 @@ app.get("/todos", auth, async (req, res) => {
   res.status(200).json({
     todos,
   });
-});
-
-app.listen(3000, () => {
-  console.log("server is on PORT:3000");
 });
 
 app.put("/update-todo", auth, async (req, res) => {
@@ -153,12 +150,16 @@ app.put("/update-todo", auth, async (req, res) => {
       },
       { new: true },
       res.status(200).json({
-        message: "Todo Updateed Successfully",
+        message: "Todo Updateed Successfully ✅",
       })
     );
   } catch (e) {
     res.status(200).json({
-      message: "Something is Wrong!!!",
+      message: "Something is Wrong 🤬!!!",
     });
   }
+});
+
+app.listen(3000, () => {
+  console.log("server is on PORT:3000");
 });
