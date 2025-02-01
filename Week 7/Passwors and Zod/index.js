@@ -105,11 +105,13 @@ app.post("/todo", auth, async (req, res) => {
   const userId = req.userId;
   const title = req.body.title;
   const description = req.body.description;
+  const done = req.body.done;
 
   const todo = await TodoModel.create({
     userId: userId,
     title: title,
     description: description,
+    done: done,
   });
 
   res.status(200).json({
@@ -131,4 +133,32 @@ app.get("/todos", auth, async (req, res) => {
 
 app.listen(3000, () => {
   console.log("server is on PORT:3000");
+});
+
+app.put("/update-todo", auth, async (req, res) => {
+  const userId = req.userId;
+  const title = req.body.title;
+  const description = req.body.description;
+  const done = req.body.done;
+
+  try {
+    await TodoModel.findOneAndUpdate(
+      { userId: userId },
+      {
+        $set: {
+          title: title,
+          description: description,
+          done: done,
+        },
+      },
+      { new: true },
+      res.status(200).json({
+        message: "Todo Updateed Successfully",
+      })
+    );
+  } catch (e) {
+    res.status(200).json({
+      message: "Something is Wrong!!!",
+    });
+  }
 });

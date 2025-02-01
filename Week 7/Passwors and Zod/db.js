@@ -14,6 +14,7 @@ const Todo = new Schema({
   userId: ObjectId,
   title: String,
   description: String,
+  done: Boolean,
 });
 
 const UserModel = model("users", User);
