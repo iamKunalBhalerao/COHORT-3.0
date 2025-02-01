@@ -160,6 +160,29 @@ app.put("/update-todo", auth, async (req, res) => {
   }
 });
 
+app.delete("/delete-todo", auth, async (req, res) => {
+  const title = req.body.title;
+  // const todoId = req.userId._id;
+
+  try {
+    const deleteTodo = await TodoModel.findOneAndDelete({ title: title });
+
+    if (!deleteTodo) {
+      res.status(403).json({
+        message: "Todo Not Found 🤬!!!",
+      });
+    } else {
+      res.status(200).json({
+        message: "Todo Deleted Successfully 👏",
+      });
+    }
+  } catch (e) {
+    res.status(403).json({
+      message: "Something went WRONG 🤬!!!",
+    });
+  }
+});
+
 app.listen(3000, () => {
   console.log("server is on PORT:3000");
 });
