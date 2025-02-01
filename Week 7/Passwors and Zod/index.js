@@ -133,14 +133,14 @@ app.get("/todos", auth, async (req, res) => {
 });
 
 app.put("/update-todo", auth, async (req, res) => {
-  const userId = req.userId;
+  const findTodo = req.body.findTodo;
   const title = req.body.title;
   const description = req.body.description;
   const done = req.body.done;
 
   try {
     await TodoModel.findOneAndUpdate(
-      { userId: userId },
+      { title: findTodo },
       {
         $set: {
           title: title,
@@ -162,7 +162,6 @@ app.put("/update-todo", auth, async (req, res) => {
 
 app.delete("/delete-todo", auth, async (req, res) => {
   const title = req.body.title;
-  // const todoId = req.userId._id;
 
   try {
     const deleteTodo = await TodoModel.findOneAndDelete({ title: title });
