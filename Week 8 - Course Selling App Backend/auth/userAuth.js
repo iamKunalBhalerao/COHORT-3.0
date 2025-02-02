@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken");
-const jwt_password = "thisisverysecretpasswrd";
+const JWT_USER_PASSWORD = "ThisisUserPassword@890";
 
 function userAuth(req, res, next) {
   const token = req.headers.token;
 
-  const decodedData = jwt.verify(token, jwt_password);
+  const decodedData = jwt.verify(token, JWT_USER_PASSWORD);
 
   if (decodedData) {
     req.userId = decodedData.id;

@@ -1,3 +1,5 @@
+const express = require("express");
+const app = express();
 const { Router } = require("express");
 const { z } = require("zod");
 const jwt = require("jsonwebtoken");
@@ -5,7 +7,9 @@ const bcrypt = require("bcrypt");
 const adminRouter = Router();
 const app = require("express");
 const { AdminModel } = require("../db");
-const { adminAuth, jwt_password } = require("../auth/adminAuth");
+const { adminAuth, JWT_ADMIN_PASSWORD } = require("../auth/adminAuth");
+
+app.use(express.json());
 
 adminRouter.post("/signup", async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
@@ -78,7 +82,7 @@ adminRouter.post("/signin", async (req, res) => {
   const comparePassword = await bcrypt.compare(password, admin.password);
 
   if (comparePassword) {
-    const token = jwt.sign({ id: admin._id.toString }, jwt_password);
+    const token = jwt.sign({ id: admin._id.toString }, JWT_ADMIN_PASSWORD);
     res.status(200).json({
       token,
     });

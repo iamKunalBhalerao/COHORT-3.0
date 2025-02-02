@@ -1,10 +1,14 @@
+const express = require("express");
+const app = express();
 const { Router } = require("express");
 const z = require("zod");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userRouter = Router();
 const { UserModel, CourseModel, PurchaseModel } = require("../db");
-const { userAuth, jwt_password } = require("../auth/userAuth");
+const { userAuth, JWT_USER_PASSWORD } = require("../auth/userAuth");
+
+app.use(express.json());
 
 userRouter.post("/signup", async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
@@ -54,6 +58,7 @@ userRouter.post("/signup", async (req, res) => {
     res.status(200).json({
       message: "You are Signed Up",
     });
+    return;
   } catch (e) {
     res.status(403).json({
       message: "User Alredy exists",
@@ -76,7 +81,7 @@ userRouter.post("/signin", async (req, res) => {
   const comparePassword = await bcrypt.compare(password, user.password);
 
   if (comparePassword) {
-    const token = jwt.sign({ id: user._id.toString }, jwt_password);
+    const token = jwt.sign({ id: user._id.toString }, JWT_USER_PASSWORD);
     res.status(200).json({
       token,
     });

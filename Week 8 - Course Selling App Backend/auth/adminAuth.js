@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken");
-const jwt_password = "thisisverysecretpasswrd";
+const JWT_ADMIN_PASSWORD = "ThisisAdminPassword@789";
 
 function adminAuth(req, res, next) {
   const token = req.headers.token;
 
-  const descodedData = jwt.verify(token, jwt_password);
+  const descodedData = jwt.verify(token, JWT_ADMIN_PASSWORD);
 
   if (descodedData) {
     req.userId = decodedData.id;
