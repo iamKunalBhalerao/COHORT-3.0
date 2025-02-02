@@ -1,9 +1,10 @@
 const { Router } = require("express");
 const z = require("zod");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const userRouter = Router();
 const { UserModel, CourseModel, PurchaseModel } = require("../db");
 const { userAuth, jwt_password } = require("../auth/userAuth");
-const { error } = require("console");
 
 userRouter.post("/signup", async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
@@ -41,9 +42,11 @@ userRouter.post("/signup", async (req, res) => {
   }
 
   try {
+    const hashedPassword = await bcrypt.hash(password, 5);
+
     await UserModel.create({
       email: email,
-      password: password,
+      password: hashedPassword,
       firstName: firstName,
       lastName: lastName,
     });
@@ -57,7 +60,23 @@ userRouter.post("/signup", async (req, res) => {
     return;
   }
 });
-userRouter.post("/signin", (req, res) => {});
+userRouter.post("/signin", (req, res) => {
+  const email = req.body;
+
+  const user = UserModel.findOne(email);
+
+  if (user) {
+    const token = jwt.sign({ id: user._id }, jwt_password);
+    res.status(200).json({
+      token,
+    });
+    return;
+  } else {
+    res.status(403).json({
+      message: "User Not Found",
+    });
+  }
+});
 userRouter.get("/purchases", userAuth, (req, res) => {});
 
 module.exports = {

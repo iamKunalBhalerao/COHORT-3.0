@@ -1,8 +1,8 @@
 const { Router } = require("express");
+const adminRouter = Router();
+const app = require("express");
 const { AdminModel } = require("../db");
 const { adminAuth, jwt_password } = require("../auth/adminAuth");
-
-const adminRouter = Router();
 
 adminRouter.post("/signup", (req, res) => {});
 adminRouter.post("/signin", (req, res) => {});
