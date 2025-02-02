@@ -9,6 +9,7 @@ const { userAuth, jwt_password } = require("../auth/userAuth");
 userRouter.post("/signup", async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
 
+  // User Input Validation using zod
   const requireBody = z.object({
     email: z.string().min(3).max(100).email(),
     firstName: z.string().min(3).max(100),
@@ -60,24 +61,38 @@ userRouter.post("/signup", async (req, res) => {
     return;
   }
 });
-userRouter.post("/signin", (req, res) => {
-  const email = req.body;
 
-  const user = UserModel.findOne(email);
+userRouter.post("/signin", async (req, res) => {
+  const { email, password } = req.body;
 
-  if (user) {
-    const token = jwt.sign({ id: user._id }, jwt_password);
+  const user = await UserModel.findOne({ email });
+
+  if (!user) {
+    res.status(403).json({
+      message: "User Not Found",
+    });
+  }
+
+  const comparePassword = await bcrypt.compare(password, user.password);
+
+  if (comparePassword) {
+    const token = jwt.sign({ id: user._id.toString }, jwt_password);
     res.status(200).json({
       token,
     });
     return;
   } else {
-    res.status(403).json({
-      message: "User Not Found",
+    res.status(304).json({
+      message: "Invalid Credentials",
     });
   }
 });
-userRouter.get("/purchases", userAuth, (req, res) => {});
+
+userRouter.get("/purchases", userAuth, (req, res) => {
+  res.json({
+    message: "Hello",
+  });
+});
 
 module.exports = {
   userRouter: userRouter,

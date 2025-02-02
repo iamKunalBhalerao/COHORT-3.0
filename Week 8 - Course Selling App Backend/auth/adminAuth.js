@@ -8,9 +8,6 @@ function adminAuth(req, res, next) {
 
   if (descodedData) {
     req.userId = decodedData.id;
-    res.status(200).json({
-      token,
-    });
     next();
   } else {
     res.status(403).json({

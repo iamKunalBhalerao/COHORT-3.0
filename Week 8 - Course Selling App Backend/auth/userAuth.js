@@ -8,9 +8,6 @@ function userAuth(req, res, next) {
 
   if (decodedData) {
     req.userId = decodedData.id;
-    res.status(200).json({
-      token,
-    });
     next();
   } else {
     res.status(403).json({
