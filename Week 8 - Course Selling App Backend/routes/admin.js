@@ -5,7 +5,6 @@ const { z } = require("zod");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const adminRouter = Router();
-const app = require("express");
 const { AdminModel } = require("../db");
 const { adminAuth, JWT_ADMIN_PASSWORD } = require("../auth/adminAuth");
 

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const JWT_USER_PASSWORD = "ThisisUserPassword@890";
+const { JWT_USER_PASSWORD } = require("../config");
 
 function userAuth(req, res, next) {
   const token = req.headers.token;
@@ -18,5 +18,5 @@ function userAuth(req, res, next) {
 
 module.exports = {
   userAuth,
-  jwt_password,
+  JWT_USER_PASSWORD,
 };

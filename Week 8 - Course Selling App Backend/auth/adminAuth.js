@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const JWT_ADMIN_PASSWORD = "ThisisAdminPassword@789";
+const {JWT_ADMIN_PASSWORD} = require('../config')
 
 function adminAuth(req, res, next) {
   const token = req.headers.token;
@@ -18,5 +18,5 @@ function adminAuth(req, res, next) {
 
 module.exports = {
   adminAuth,
-  jwt_password,
+  JWT_ADMIN_PASSWORD,
 };

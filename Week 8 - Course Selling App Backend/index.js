@@ -8,9 +8,9 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/user", userRouter);
-app.use("/admin", adminRouter);
-app.use("/course", courseRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/course", courseRouter);
 
 async function main() {
   await mongoose.connect(
