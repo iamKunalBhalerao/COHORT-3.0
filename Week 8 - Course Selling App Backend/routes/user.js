@@ -99,11 +99,16 @@ userRouter.get("/purchases", userAuth, async (req, res) => {
   const userId = req.userId;
 
   const purchases = await PurchaseModel.find({
-    userId,
+    userId: userId,
+  });
+
+  const coursesData = await CourseModel.find({
+    _id: { $in: purchases.map((x) => x.courseId) },
   });
 
   res.json({
     purchases,
+    coursesData,
   });
 });
 
