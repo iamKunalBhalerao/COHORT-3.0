@@ -81,9 +81,9 @@ adminRouter.post("/signin", async (req, res) => {
     return;
   }
 
-  const comparePassword = await bcrypt.compare(password, admin.password);
+  const compareAdminPassword = await bcrypt.compare(password, admin.password);
 
-  if (comparePassword) {
+  if (compareAdminPassword) {
     const token = jwt.sign({ id: admin._id.toString }, JWT_ADMIN_PASSWORD);
     res.status(200).json({
       token,
@@ -150,7 +150,7 @@ adminRouter.put("/course-content", adminAuth, async (req, res) => {
     });
   }
 });
-adminRouter.get("/coourse-bulk", adminAuth, async (req, res) => {
+adminRouter.get("/course-bulk", adminAuth, async (req, res) => {
   const adminId = req.userId;
   try {
     const courses = await CourseModel.find({
@@ -168,7 +168,27 @@ adminRouter.get("/coourse-bulk", adminAuth, async (req, res) => {
   }
 });
 
-adminRouter.delete("/delete-course", adminAuth, (req, res) => {});
+adminRouter.delete("/delete-course", adminAuth, async (req, res) => {
+  const adminId = req.userId;
+
+  const { courseId } = req.body;
+
+  try {
+    const course = await CourseModel.deleteOne({
+      _id: courseId,
+      creatorId: adminId,
+    });
+
+    res.status(200).json({
+      message: "Course deleted Successfully",
+      course,
+    });
+  } catch (e) {
+    res.status(403).json({
+      message: "something went wrong",
+    });
+  }
+});
 
 module.exports = {
   adminRouter: adminRouter,

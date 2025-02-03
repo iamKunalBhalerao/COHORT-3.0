@@ -4,14 +4,14 @@ const ObjectId = Schema.ObjectId;
 const UserSchema = new Schema({
   email: { type: String, unique: true },
   password: String,
-  FirstName: String,
+  firstName: String,
   lastName: String,
 });
 
 const AdminSchema = new Schema({
   email: { type: String, unique: true },
   password: String,
-  FirstName: String,
+  firstName: String,
   lastName: String,
 });
 

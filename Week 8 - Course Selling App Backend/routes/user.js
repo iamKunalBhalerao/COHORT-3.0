@@ -73,7 +73,7 @@ userRouter.post("/signup", async (req, res) => {
 userRouter.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await UserModel.findOne({ email });
+  const user = await UserModel.findOne({ email: email });
 
   if (!user) {
     res.status(403).json({
@@ -81,16 +81,15 @@ userRouter.post("/signin", async (req, res) => {
     });
   }
 
-  const comparePassword = await bcrypt.compare(password, user.password);
+  const compareUserPassword = await bcrypt.compare(password, user.password);
 
-  if (comparePassword) {
-    const token = jwt.sign({ id: user._id.toString }, JWT_USER_PASSWORD);
+  if (compareUserPassword) {
+    const token = jwt.sign({ id: user._id.toString() }, JWT_USER_PASSWORD);
     res.status(200).json({
       token,
     });
-    return;
   } else {
-    res.status(304).json({
+    res.status(403).json({
       message: "Invalid Credentials",
     });
   }
