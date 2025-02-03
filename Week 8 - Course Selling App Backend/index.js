@@ -1,3 +1,5 @@
+const dotenv = require("dotenv").config();
+
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
@@ -13,9 +15,7 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/course", courseRouter);
 
 async function main() {
-  await mongoose.connect(
-    "mongodb+srv://kunalbhalerao789:kunal%400987654321@cluster01.hm8ab.mongodb.net/Course-Selling-App"
-  );
+  await mongoose.connect(process.env.MONGO_URL);
 
   app.listen(3000, () => {
     console.log("server is on PORT:3000");

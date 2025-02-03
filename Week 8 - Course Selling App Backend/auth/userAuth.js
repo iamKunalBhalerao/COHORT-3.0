@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
-const { JWT_USER_PASSWORD } = require("../config");
+const dotenv = require("dotenv").config();
+// const { JWT_USER_PASSWORD } = require("../config");
 
 function userAuth(req, res, next) {
   const token = req.headers.token;
 
-  const decodedData = jwt.verify(token, JWT_USER_PASSWORD);
+  const decodedData = jwt.verify(token, process.env.JWT_USER_PASSWORD);
 
   if (decodedData) {
     req.userId = decodedData.id;
@@ -18,5 +19,4 @@ function userAuth(req, res, next) {
 
 module.exports = {
   userAuth,
-  JWT_USER_PASSWORD,
 };
