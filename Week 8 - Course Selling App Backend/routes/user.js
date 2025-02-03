@@ -95,9 +95,15 @@ userRouter.post("/signin", async (req, res) => {
   }
 });
 
-userRouter.get("/purchases", userAuth, (req, res) => {
+userRouter.get("/purchases", userAuth, async (req, res) => {
+  const userId = req.userId;
+
+  const purchases = await PurchaseModel.find({
+    userId,
+  });
+
   res.json({
-    message: "Hello",
+    purchases,
   });
 });
 
