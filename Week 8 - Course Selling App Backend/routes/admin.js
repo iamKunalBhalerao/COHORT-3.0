@@ -100,21 +100,52 @@ adminRouter.post("/create-course", adminAuth, async (req, res) => {
 
   const { title, description, price, imageUrl } = req.body;
 
-  const course = await CourseModel.create({
-    title: title,
-    description: description,
-    price: price,
-    imageUrl: imageUrl,
-    creatorId: adminId,
-  });
+  try {
+    const course = await CourseModel.create({
+      title: title,
+      description: description,
+      price: price,
+      imageUrl: imageUrl,
+      creatorId: adminId,
+    });
 
-  res.status(200).json({
-    message: "Course Created",
-    creatorId: course._id,
-  });
+    res.status(200).json({
+      message: "Course Created",
+      course,
+      creatorId: course._id,
+    });
+  } catch (e) {
+    res.status(403).json({
+      message: "something went wrong",
+    });
+  }
 });
 
-adminRouter.put("/course-content", adminAuth, (req, res) => {});
+adminRouter.put("/course-content", adminAuth, async (req, res) => {
+  const title = req.headers.title;
+
+  try {
+    const findTitle = await CourseModel.findOneAndUpdate(
+      { title: title.toString() },
+      {
+        title,
+        description,
+        price,
+        imageUrl,
+      },
+      { new: true, runValidators: true }
+    );
+
+    res.status(200).json({
+      message: "Course Updated Successfully",
+      findTitle,
+    });
+  } catch (e) {
+    res.status(403).json({
+      message: "Something went Wrong !!!",
+    });
+  }
+});
 adminRouter.get("/", adminAuth, (req, res) => {});
 adminRouter.delete("/delete-course", adminAuth, (req, res) => {});
 
