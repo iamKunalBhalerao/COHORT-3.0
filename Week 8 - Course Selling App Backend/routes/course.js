@@ -1,6 +1,6 @@
 const { Router } = require("express");
-const { PurchaseModel, CourseModel } = require("../db");
 const { userAuth } = require("../auth/userAuth");
+const { PurchaseModel, CourseModel } = require("../db");
 
 const courseRouter = Router();
 
