@@ -1,5 +1,4 @@
 const express = require("express");
-const dotenv = require("dotenv").config();
 const z = require("zod");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -7,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const { Router } = require("express");
 const { AdminModel, CourseModel } = require("../db");
 const { adminAuth } = require("../auth/adminAuth");
-// const { JWT_ADMIN_PASSWORD } = require("../config");
+const { JWT_ADMIN_PASSWORD } = require("../config");
 
 const adminRouter = Router();
 const app = express();
@@ -85,10 +84,7 @@ adminRouter.post("/signin", async (req, res) => {
   const comparePassword = await bcrypt.compare(password, admin.password);
 
   if (comparePassword) {
-    const token = jwt.sign(
-      { id: admin._id.toString },
-      process.env.JWT_ADMIN_PASSWORD
-    );
+    const token = jwt.sign({ id: admin._id.toString }, JWT_ADMIN_PASSWORD);
     res.status(200).json({
       token,
     });

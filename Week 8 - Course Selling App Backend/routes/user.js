@@ -1,12 +1,11 @@
 const express = require("express");
-const dotenv = require("dotenv").config();
 const z = require("zod");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const { Router } = require("express");
 const { userAuth } = require("../auth/userAuth");
-// const { JWT_USER_PASSWORD } = require("../config");
+const { JWT_USER_PASSWORD } = require("../config");
 const { UserModel, CourseModel, PurchaseModel } = require("../db");
 
 const app = express();
@@ -85,10 +84,7 @@ userRouter.post("/signin", async (req, res) => {
   const comparePassword = await bcrypt.compare(password, user.password);
 
   if (comparePassword) {
-    const token = jwt.sign(
-      { id: user._id.toString },
-      process.env.JWT_USER_PASSWORD
-    );
+    const token = jwt.sign({ id: user._id.toString }, JWT_USER_PASSWORD);
     res.status(200).json({
       token,
     });
