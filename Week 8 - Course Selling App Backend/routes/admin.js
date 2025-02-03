@@ -84,7 +84,7 @@ adminRouter.post("/signin", async (req, res) => {
   const compareAdminPassword = await bcrypt.compare(password, admin.password);
 
   if (compareAdminPassword) {
-    const token = jwt.sign({ id: admin._id.toString }, JWT_ADMIN_PASSWORD);
+    const token = jwt.sign({ id: admin._id }, JWT_ADMIN_PASSWORD);
     res.status(200).json({
       token,
     });
@@ -100,25 +100,18 @@ adminRouter.post("/create-course", adminAuth, async (req, res) => {
 
   const { title, description, price, imageUrl } = req.body;
 
-  try {
-    const course = await CourseModel.create({
-      title: title,
-      description: description,
-      price: price,
-      imageUrl: imageUrl,
-      creatorId: adminId,
-    });
+  const course = await CourseModel.create({
+    title: title,
+    description: description,
+    price: price,
+    imageUrl: imageUrl,
+    creatorId: adminId,
+  });
 
-    res.status(200).json({
-      message: "Course Created",
-      course,
-      creatorId: course._id,
-    });
-  } catch (e) {
-    res.status(403).json({
-      message: "something went wrong",
-    });
-  }
+  res.status(200).json({
+    message: "Course Created",
+    courseId: course._id,
+  });
 });
 
 adminRouter.put("/course-content", adminAuth, async (req, res) => {
@@ -126,35 +119,29 @@ adminRouter.put("/course-content", adminAuth, async (req, res) => {
 
   const { title, description, price, imageUrl, courseId } = req.body;
 
-  try {
-    const course = await CourseModel.updateOne(
-      {
-        _id: courseId,
-        creatorId: adminId,
-      },
-      {
-        title: title,
-        description: description,
-        price: price,
-        imageUrl: imageUrl,
-      }
-    );
+  const course = await CourseModel.updateOne(
+    {
+      _id: courseId,
+      creatorId: adminId,
+    },
+    {
+      title: title,
+      description: description,
+      price: price,
+      imageUrl: imageUrl,
+    }
+  );
 
-    res.status(200).json({
-      message: "Course Updated",
-      course,
-    });
-  } catch (e) {
-    res.status(403).json({
-      message: "something went wrong",
-    });
-  }
+  res.status(200).json({
+    message: "Course Updated",
+    courseId: course._id,
+  });
 });
 adminRouter.get("/course-bulk", adminAuth, async (req, res) => {
   const adminId = req.userId;
   try {
     const courses = await CourseModel.find({
-      courseId: adminId,
+      creatorId: adminId,
     });
 
     res.status(200).json({
@@ -171,8 +158,7 @@ adminRouter.get("/course-bulk", adminAuth, async (req, res) => {
 adminRouter.delete("/delete-course", adminAuth, async (req, res) => {
   const adminId = req.userId;
 
-  const { courseId } = req.body;
-
+  const courseId = req.body.courseId;
   try {
     const course = await CourseModel.deleteOne({
       _id: courseId,
@@ -180,12 +166,12 @@ adminRouter.delete("/delete-course", adminAuth, async (req, res) => {
     });
 
     res.status(200).json({
-      message: "Course deleted Successfully",
-      course,
+      message: "Course deleted",
+      courseId: course._id,
     });
   } catch (e) {
     res.status(403).json({
-      message: "something went wrong",
+      message: "Invalid credentials",
     });
   }
 });
