@@ -122,31 +122,52 @@ adminRouter.post("/create-course", adminAuth, async (req, res) => {
 });
 
 adminRouter.put("/course-content", adminAuth, async (req, res) => {
-  const title = req.headers.title;
+  const adminId = req.userId;
+
+  const { title, description, price, imageUrl, courseId } = req.body;
 
   try {
-    const findTitle = await CourseModel.findOneAndUpdate(
-      { title: title.toString() },
+    const course = await CourseModel.updateOne(
       {
-        title,
-        description,
-        price,
-        imageUrl,
+        _id: courseId,
+        creatorId: adminId,
       },
-      { new: true, runValidators: true }
+      {
+        title: title,
+        description: description,
+        price: price,
+        imageUrl: imageUrl,
+      }
     );
 
     res.status(200).json({
-      message: "Course Updated Successfully",
-      findTitle,
+      message: "Course Updated",
+      course,
     });
   } catch (e) {
     res.status(403).json({
-      message: "Something went Wrong !!!",
+      message: "something went wrong",
     });
   }
 });
-adminRouter.get("/", adminAuth, (req, res) => {});
+adminRouter.get("/coourse-bulk", adminAuth, async (req, res) => {
+  const adminId = req.userId;
+  try {
+    const courses = await CourseModel.find({
+      courseId: adminId,
+    });
+
+    res.status(200).json({
+      message: "Courses:",
+      courses,
+    });
+  } catch (e) {
+    res.status(403).json({
+      message: "Something went wrong",
+    });
+  }
+});
+
 adminRouter.delete("/delete-course", adminAuth, (req, res) => {});
 
 module.exports = {
