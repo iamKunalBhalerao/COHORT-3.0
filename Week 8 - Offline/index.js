@@ -27,6 +27,23 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.get("/data", async (req, res) => {
+  const email = req.body.email;
+
+  try {
+    const user = await UserModel.find({
+      email,
+    });
+    res.status(200).json({
+      userData: user,
+    });
+  } catch (e) {
+    res.status(403).json({
+      message: "Invalid Email",
+    });
+  }
+});
+
 function main() {
   mongoose.connect(process.env.MONGO_URL);
   app.listen(3000, () => {
