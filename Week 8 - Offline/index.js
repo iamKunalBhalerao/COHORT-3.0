@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
 const app = express();
 
 app.use(express.json());
@@ -9,9 +10,7 @@ app.post("/signup", async (req, res) => {
 });
 
 function main() {
-  mongoose.connect(
-    "mongodb+srv://kunalbhalerao789:kunal%400987654321@cluster01.hm8ab.mongodb.net/mongoDeepDive"
-  );
+  mongoose.connect(process.env.MONGO_URL);
   app.listen(3000, () => {
     console.log("server os on PORT:3000");
   });
