@@ -9,19 +9,20 @@ app.use(express.json());
 app.post("/signup", async (req, res) => {
   const { Username, email, password } = req.body;
 
-  const user = await UserModel.create({
-    Username,
-    email,
-    password,
-  });
+  try {
+    await UserModel.create({
+      Username,
+      email,
+      password,
+    });
 
-  if (user) {
     res.status(200).json({
       message: "You are Signed Up",
     });
-  } else {
+  } catch (e) {
     res.status(403).json({
       message: "User Alredy Exists",
+      error: e.message,
     });
   }
 });
