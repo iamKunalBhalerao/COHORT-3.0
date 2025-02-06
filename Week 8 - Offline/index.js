@@ -1,53 +1,16 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const { UserModel } = require("./db");
-require("dotenv").config();
+const bodyParser = require("body-parser");
 const app = express();
+const adminRouter = require("./routes/admin");
+const userRouter = require("./routes/user");
 
-app.use(express.json());
+// Middleware for parsing request bodies
+app.use(bodyParser.json());
+app.use("/admin", adminRouter);
+app.use("/user", userRouter);
 
-app.post("/signup", async (req, res) => {
-  const { Username, email, password } = req.body;
+const PORT = 3000;
 
-  try {
-    await UserModel.create({
-      Username,
-      email,
-      password,
-    });
-
-    res.status(200).json({
-      message: "You are Signed Up",
-    });
-  } catch (e) {
-    res.status(403).json({
-      message: "User Alredy Exists",
-      error: e.message,
-    });
-  }
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
-app.get("/data", async (req, res) => {
-  const email = req.body.email;
-
-  try {
-    const user = await UserModel.find({
-      email,
-    });
-    res.status(200).json({
-      userData: user,
-    });
-  } catch (e) {
-    res.status(403).json({
-      message: "Invalid Email",
-    });
-  }
-});
-
-function main() {
-  mongoose.connect(process.env.MONGO_URL);
-  app.listen(3000, () => {
-    console.log("server os on PORT:3000");
-  });
-}
-main();
