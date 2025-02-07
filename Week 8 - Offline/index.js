@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const mongoose = require("mongoose");
 const adminRouter = require("./routes/admin");
 const userRouter = require("./routes/user");
 require("dotenv").config();
@@ -12,6 +13,10 @@ app.use("/user", userRouter);
 
 const PORT = 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+function main() {
+  mongoose.connect(process.env.MONGO_URL);
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+main();

@@ -4,7 +4,7 @@ const model = mongoose.model;
 const ObjectId = Schema.ObjectId;
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URL);
+// mongoose.connect(process.env.MONGO_URL);
 
 // Define schemas
 const AdminSchema = new Schema({
@@ -13,7 +13,7 @@ const AdminSchema = new Schema({
 });
 
 const UserSchema = new Schema({
-  Username: String,
+  username: String,
   password: String,
   purchasedCourse: [
     {
