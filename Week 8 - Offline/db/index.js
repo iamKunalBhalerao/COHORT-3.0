@@ -8,7 +8,7 @@ mongoose.connect(process.env.MONGO_URL);
 
 // Define schemas
 const AdminSchema = new Schema({
-  Username: String,
+  username: String,
   password: String,
 });
 
