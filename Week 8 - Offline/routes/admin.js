@@ -46,7 +46,7 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-router.post("/courses", adminMiddleware, async (req, res) => {
+router.post("/create", adminMiddleware, async (req, res) => {
   // Implement course creation logic
   const { title, description, price, imageUrl } = req.body;
 

@@ -1,7 +1,9 @@
 const { Router } = require("express");
 const router = Router();
+const jwt = require("jsonwebtoken");
 const userMiddleware = require("../middleware/user");
 const { UserModel, CourseModel } = require("../db/index");
+const { JWT_SECRET } = require("../config");
 
 // User Routes
 router.post("/signup", async (req, res) => {
@@ -23,6 +25,26 @@ router.post("/signup", async (req, res) => {
   });
 });
 
+router.post("/signin", async (req, res) => {
+  const { username, password } = req.body;
+
+  const admin = await UserModel.find({
+    username: username,
+    password: password,
+  });
+
+  if (admin) {
+    const token = jwt.sign({ username }, JWT_SECRET);
+    res.status(200).json({
+      token,
+    });
+  } else {
+    res.status(403).json({
+      message: "Invalid Credentials",
+    });
+  }
+});
+
 router.get("/courses", async (req, res) => {
   // Implement fetching all courses logic
   const courses = await CourseModel.find({});
@@ -35,7 +57,7 @@ router.get("/courses", async (req, res) => {
 router.post("/courses/:courseId", userMiddleware, async (req, res) => {
   // Implement course purchase logic
   const courseId = req.params.courseId;
-  const username = req.headers.username;
+  const username = req.username;
 
   try {
     await UserModel.updateOne(

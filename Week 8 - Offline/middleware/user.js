@@ -1,20 +1,21 @@
-const { UserModel } = require("../db");
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = require("../config");
 
 async function userMiddleware(req, res, next) {
   // Implement user auth logic
   // You need to check the headers and validate the user from the user DB. Check readme for the exact headers to be expected
-  const { username, password } = req.headers;
+  const token = req.headers.authorization;
+  const words = token.split(" ");
+  const jwtToken = words[1];
 
-  const user = await UserModel.findOne({
-    username: username,
-    password: password,
-  });
+  const decodedData = jwt.verify(jwtToken, JWT_SECRET);
 
-  if (user) {
+  if (decodedData) {
+    req.username = decodedData.username;
     next();
   } else {
     res.status(403).json({
-      message: "User Dosent Exists",
+      message: "User Not Found",
     });
   }
 }
