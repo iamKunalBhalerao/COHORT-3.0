@@ -5,6 +5,9 @@ const ObjectId = Schema.ObjectId;
 
 // Connect to MongoDB
 // mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(
+  "mongodb+srv://kunalbhalerao789:kunal%400987654321@cluster01.hm8ab.mongodb.net/mongoDeepDive"
+);
 
 // Define schemas
 const AdminSchema = new Schema({
