@@ -8,7 +8,6 @@ const App = () => {
       done: false,
     },
   ]);
-
   function addTodo() {
     let newArray = [];
     for (let i = 0; i < todos.length; i++) {
@@ -16,8 +15,8 @@ const App = () => {
     }
 
     newArray.push({
-      title: "Go to Barber shop",
-      description: "Cut hair properly",
+      titlel: document.getElementById("title").value,
+      description: document.getElementById("description").value,
       done: false,
     });
     setTodos(newArray);
@@ -26,7 +25,16 @@ const App = () => {
   return (
     <>
       <div>
+        <input type="text" id="title" placeholder="Totle" />
+        <br />
+        <br />
+        <input type="text" id="description" placeholder="description" />
+        <br />
+        <br />
         <button onClick={addTodo}>Add Todo</button>
+        <br />
+        <br />
+        <hr />
         <p>{JSON.stringify(todos)}</p>
       </div>
     </>
