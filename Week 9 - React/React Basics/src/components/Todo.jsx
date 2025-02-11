@@ -1,7 +1,12 @@
-const Todo = () => {
+const Todo = (props) => {
   return (
     <>
-      <h1>This is Todo app</h1>
+      <div>
+        <h1>{props.title}</h1>
+        <p>{props.description}</p>
+        <button>{props.done ? "Task is Done" : "Task is Incomplete"}</button>
+        <hr />
+      </div>
     </>
   );
 };

@@ -1,11 +1,12 @@
 import { useState } from "react";
+import Todo from "./components/Todo";
 
 const App = () => {
   const [todos, setTodos] = useState([
     {
       title: "Go and Code",
       description: "Code a Todo app",
-      done: false,
+      done: true,
     },
   ]);
   function addTodo() {
@@ -15,7 +16,7 @@ const App = () => {
     }
 
     newArray.push({
-      titlel: document.getElementById("title").value,
+      title: document.getElementById("title").value,
       description: document.getElementById("description").value,
       done: false,
     });
@@ -25,17 +26,28 @@ const App = () => {
   return (
     <>
       <div>
-        <input type="text" id="title" placeholder="Totle" />
+        <input required type="text" id="title" placeholder="Totle" />
         <br />
         <br />
-        <input type="text" id="description" placeholder="description" />
+        <input
+          required
+          type="text"
+          id="description"
+          placeholder="description"
+        />
         <br />
         <br />
         <button onClick={addTodo}>Add Todo</button>
         <br />
-        <br />
-        <hr />
-        <p>{JSON.stringify(todos)}</p>
+
+        {todos.map((todo) => (
+          <Todo
+            key=""
+            title={todo.title}
+            description={todo.description}
+            done={todo.true}
+          />
+        ))}
       </div>
     </>
   );
