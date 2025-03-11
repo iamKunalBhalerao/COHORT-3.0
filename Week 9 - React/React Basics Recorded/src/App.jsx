@@ -1,9 +1,18 @@
-import Counter from "./components/Counter";
+import Post from "./components/Post";
 
 const App = () => {
   return (
-    <div>
-      <Counter />
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Post />
+      <Post />
+      <Post />
     </div>
   );
 };
