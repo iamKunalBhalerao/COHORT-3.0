@@ -1,4 +1,4 @@
-const Post = () => {
+const Post = ({ title, followers, time }) => {
   const divStyle = {
     width: 200,
     backgroundColor: "#f9f9f9",
@@ -30,12 +30,24 @@ const Post = () => {
         />
         <div style={{ fontSize: 6, lineHeight: 0.2 }}>
           <p>
-            <b>100xDevs</b>
+            <b>{title}</b>
           </p>
-          <p style={{ color: "gray" }}>33,844 followers</p>
-          <p style={{ color: "gray" }}>3d.</p>
+          <p style={{ color: "gray" }}>{followers}</p>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "baseline",
+              marginTop: -5,
+            }}
+          >
+            <p style={{ color: "gray" }}>{time}</p>
+            <i class="ri-git-commit-line"></i>
+            <i class="ri-earth-fill"></i>
+          </div>
         </div>
       </div>
+
       {/* Post Body */}
       <div className="postBody" style={{ fontSize: 7, padding: 7 }}>
         <p style={{ lineHeight: 2, fontSize: 7, fontWeight: 400 }}>
