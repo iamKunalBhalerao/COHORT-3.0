@@ -23,8 +23,16 @@ const App = () => {
           alignItems: "center",
         }}
       >
-        <Post title={"100xDevs"} followers={"33, 348 followers"} time={"2 days ago"} />
-        <Post title={"100xDevs"} followers={"Promoted"} time={"2 days ago"} />
+        <Post
+          title={"100xDevs"}
+          subtitle={"33, 348 followers"}
+          time={"2 days ago"}
+        />
+        <Post
+          title={"100xDevs"}
+          subtitle={"Promoted"}
+          // time={"2 days ago"}
+        />
       </div>
       <div>
         <Trending />

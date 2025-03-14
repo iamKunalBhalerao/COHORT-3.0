@@ -1,4 +1,4 @@
-const Post = ({ title, followers, time }) => {
+const Post = ({ title, subtitle, time }) => {
   const divStyle = {
     width: 200,
     backgroundColor: "#f9f9f9",
@@ -32,19 +32,21 @@ const Post = ({ title, followers, time }) => {
           <p>
             <b>{title}</b>
           </p>
-          <p style={{ color: "gray" }}>{followers}</p>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "baseline",
-              marginTop: -5,
-            }}
-          >
-            <p style={{ color: "gray" }}>{time}</p>
-            <i class="ri-git-commit-line"></i>
-            <i class="ri-earth-fill"></i>
-          </div>
+          <p style={{ color: "gray" }}>{subtitle}</p>
+          {time !== undefined && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "baseline",
+                marginTop: -5,
+              }}
+            >
+              <p style={{ color: "gray" }}>{time}</p>
+              <i class="ri-git-commit-line"></i>
+              <i class="ri-earth-fill"></i>
+            </div>
+          )}
         </div>
       </div>
 

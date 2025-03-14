@@ -32,7 +32,7 @@ const Message = () => {
         >
           Toggle Message
         </button>
-        {isVisible && <h1>This message is Conditionally Re-rendered</h1>}
+        {isVisible ? <h1>This message is Conditionally Re-rendered</h1> : null}
       </div>
     </>
   );
