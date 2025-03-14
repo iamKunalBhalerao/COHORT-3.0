@@ -1,17 +1,42 @@
-import React from "react";
-import Message from "./components/Message";
+import Post from "./components/Post";
+import ProfileCard from "./components/ProfileCard";
+import Trending from "./components/Trending";
 
 const App = () => {
   return (
     <div
       style={{
         display: "flex",
-        alignItems: "center",
+        // alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
+        gap: 10,
       }}
     >
-      <Message />
+      <div className="profileCard">
+        <ProfileCard />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Post
+          title={"100xDevs"}
+          subtitle={"33, 348 followers"}
+          time={"2 days ago"}
+        />
+        <Post
+          title={"100xDevs"}
+          subtitle={"Promoted"}
+          // time={"2 days ago"}
+        />
+      </div>
+      <div>
+        <Trending />
+      </div>
     </div>
   );
 };
