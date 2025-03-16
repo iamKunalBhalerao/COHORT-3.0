@@ -1,0 +1,9 @@
+@import "tailwindcss";
+* {
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.HeroSection {
+  background: url("src/imgs/bgnew.jpg");
+}
