@@ -1,24 +1,29 @@
 import React, { useState } from "react";
 
 const Toggle = () => {
-  const [isValue, SetisValue] = useState(false);
+  const [isValue, setIsValue] = useState(false);
+
+  function handleClick() {
+    setIsValue(!isValue);
+  }
+
+  const btnstyle = {
+    backgroundColor: "#FE4F2D",
+    color: "white",
+    padding: "10px",
+    borderRadius: "5px",
+    border: "none",
+    cursor: "pointer",
+  };
+
   return (
     <>
-      <button
-        style={{
-          padding: 4,
-          backgroundColor: "#FE4F2D",
-          border: "1px solid #FE4F2D",
-          borderRadius: 4,
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          SetisValue(!isValue);
-        }}
-      >
+      <button style={btnstyle} onClick={handleClick}>
         Toggle Message
       </button>
-      {isValue && <p>This is conditional Re-rendering</p>}
+      {isValue ? (
+        <p>After Clicking Button Conditional Re-rendering happend</p>
+      ) : null}
     </>
   );
 };
