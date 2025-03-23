@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 const Notification = () => {
   const [count, setCount] = useState(0);
 
-  const increase = () => {
-    setCount((prevValue) => prevValue + 1);
-  };
+  function increase() {
+    setCount((prevCount) => prevCount + 1);
+  }
 
   useEffect(() => {
     setInterval(increase, 1000);
