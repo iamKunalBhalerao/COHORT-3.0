@@ -20,7 +20,7 @@ const App = () => {
     setPosts([
       ...posts,
       {
-        name: "Post 1",
+        name: "Kunal Bhalerao",
         subtitle: "22,324 Followers",
         time: "1 hour ago",
         image:
@@ -42,6 +42,7 @@ const App = () => {
             border: "none",
             borderRadius: 4,
             cursor: "pointer",
+            position: "fixed",
           }}
           onClick={addPost}
         >

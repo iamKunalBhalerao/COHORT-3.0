@@ -2,14 +2,25 @@ import React, { useEffect, useState } from "react";
 
 const Notification = () => {
   const [count, setCount] = useState(0);
+  const [count2, setCount2] = useState(0);
 
   function increase() {
     setCount((prevCount) => prevCount + 1);
   }
 
+  function decrease() {
+    setCount2((prevCount) => prevCount - 1);
+  }
+
   useEffect(() => {
     setInterval(increase, 1000);
+    setInterval(decrease, 3000);
   }, []);
+
+  useEffect(() => {
+    console.log("useEffect runs after increase count : " + count);
+    console.log("useEffect runs after decrease count : " + count2);
+  }, [count, count2]);
 
   return (
     <>
@@ -36,7 +47,7 @@ const Notification = () => {
             color: "white",
           }}
         >
-          {count}
+          [{count}]-[{count2}]
         </span>
       </div>
     </>
