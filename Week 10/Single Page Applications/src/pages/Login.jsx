@@ -47,6 +47,7 @@ const Login = () => {
           />
 
           <form
+            action={redirectUser}
             style={{
               width: "50%",
               backgroundColor: "white",
@@ -123,7 +124,6 @@ const Login = () => {
                 marginTop: "20px",
                 cursor: "pointer",
               }}
-              onClick={redirectUser}
             >
               Login
             </button>
