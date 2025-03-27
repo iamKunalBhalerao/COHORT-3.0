@@ -1,7 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Results = () => {
+  const navigate = useNavigate();
+
+  function redirectUser() {
+    navigate("/courses");
+  }
+
   return (
     <>
       <div
@@ -35,6 +41,26 @@ const Results = () => {
           praesentium voluptas molestiae ipsum corporis quae omnis veritatis
           voluptatum. Vel, aperiam.
         </p>
+        <button
+          style={{
+            fontSize: "20px",
+            marginTop: "20px",
+            padding: "20px",
+            backgroundColor: "#143D60",
+            border: "none",
+            borderRadius: "20px",
+            color: "white",
+            cursor: "pointer",
+            fontWeight: 500,
+          }}
+          onClick={redirectUser}
+        >
+          Courses{" "}
+          <i
+            className="ri-arrow-right-up-line"
+            style={{ backgroundColor: "transparent", color: "white" }}
+          ></i>
+        </button>
       </div>
     </>
   );

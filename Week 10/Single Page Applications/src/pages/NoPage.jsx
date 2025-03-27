@@ -1,7 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NoPage = () => {
+  const navigate = useNavigate();
+
+  function redirectUser() {
+    navigate("/");
+  }
   return (
     <>
       <div
@@ -37,6 +42,26 @@ const NoPage = () => {
             textAlign: "center",
           }}
         ></p>
+        <button
+          style={{
+            fontSize: "20px",
+            marginTop: "20px",
+            padding: "20px",
+            backgroundColor: "#143D60",
+            border: "none",
+            borderRadius: "20px",
+            color: "white",
+            cursor: "pointer",
+            fontWeight: 500,
+          }}
+          onClick={redirectUser}
+        >
+          Go Home{" "}
+          <i
+            className="ri-arrow-right-up-line"
+            style={{ backgroundColor: "transparent", color: "white" }}
+          ></i>
+        </button>
       </div>
     </>
   );

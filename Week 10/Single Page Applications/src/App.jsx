@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import TestSeries from "./pages/TestSeries";
 import Scholorships from "./pages/Scholorships";
 import StudyMaterial from "./pages/StudyMaterial";
+import Login from "./pages/Login";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="study-material" element={<StudyMaterial />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="login" element={<Login />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>

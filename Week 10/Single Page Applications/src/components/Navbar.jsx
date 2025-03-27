@@ -146,8 +146,8 @@ const Navbar = () => {
               borderRadius: "20px",
             }}
           ></i>
-          <a
-            href="#"
+          <Link
+            to="Login"
             style={{
               textDecoration: "none",
               cursor: "pointer",
@@ -158,7 +158,7 @@ const Navbar = () => {
             }}
           >
             Log In
-          </a>
+          </Link>
         </div>
       </nav>
     </>
