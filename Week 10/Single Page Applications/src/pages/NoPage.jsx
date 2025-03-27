@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Contact = () => {
+const NoPage = () => {
   return (
     <>
       <div
@@ -20,8 +20,14 @@ const Contact = () => {
           justifyContent: "center",
         }}
       >
-        <h1 style={{ fontSize: "100px", backgroundColor: "transparent" }}>
-          This is Contact Us Page
+        <h1
+          style={{
+            fontSize: "150px",
+            backgroundColor: "transparent",
+            textAlign: "center",
+          }}
+        >
+          404 Page Not Found
         </h1>
         <p
           style={{
@@ -30,14 +36,10 @@ const Contact = () => {
             color: "gray",
             textAlign: "center",
           }}
-        >
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae,
-          praesentium voluptas molestiae ipsum corporis quae omnis veritatis
-          voluptatum. Vel, aperiam.
-        </p>
+        ></p>
       </div>
     </>
   );
 };
 
-export default Contact;
+export default NoPage;

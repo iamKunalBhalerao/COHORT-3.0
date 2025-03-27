@@ -1,22 +1,16 @@
-import React, { useState } from "react";
-import Home from "../pages/Home";
-import About from "../pages/About";
-import Contact from "../pages/Contact";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [currentTab, setCurrentTab] = useState("home");
-
-  const navigateTab = (route) => {
-    setCurrentTab(route);
-  };
-
   return (
     <>
       <nav
         style={{
+          width: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-around",
+          position: "fixed",
           backgroundColor: "white",
           padding: "0 1rem",
         }}
@@ -42,7 +36,7 @@ const Navbar = () => {
           >
             Allen
           </h1>
-          <a
+          <Link
             style={{
               textDecoration: "none",
               cursor: "pointer",
@@ -50,86 +44,87 @@ const Navbar = () => {
               backgroundColor: "white",
               //   color: "black",
             }}
-            onClick={() => navigateTab("home")}
+            to=""
           >
             Home
-          </a>
-          <a
+          </Link>
+          <Link
             style={{
               textDecoration: "none",
               cursor: "pointer",
               color: "black",
               backgroundColor: "white",
             }}
-            onClick={() => navigateTab("about")}
+            to="courses"
           >
-            About
-          </a>
-          <a
+            Courses
+          </Link>
+          <Link
             style={{
               textDecoration: "none",
               cursor: "pointer",
               color: "black",
               backgroundColor: "white",
             }}
-            onClick={() => navigateTab("contact")}
+            to="test-series"
           >
-            Contact Us
-          </a>
-          <a
+            Test Series
+          </Link>
+          <Link
             style={{
               textDecoration: "none",
               cursor: "pointer",
               color: "black",
               backgroundColor: "white",
             }}
-            href="#"
+            to="scholorships"
           >
             Scholorships
-          </a>
-          <a
+          </Link>
+          <Link
             style={{
               textDecoration: "none",
               cursor: "pointer",
               color: "black",
               backgroundColor: "white",
             }}
-            href="#"
+            to="results"
           >
             Results
-            <span
-              style={{
-                backgroundColor: "#FE4F2D",
-                color: "white",
-                fontSize: "10px",
-                borderRadius: "10px",
-              }}
-            >
-              new
-            </span>
-          </a>
-          <a
+          </Link>
+          <Link
             style={{
               textDecoration: "none",
               cursor: "pointer",
               color: "black",
               backgroundColor: "white",
             }}
-            href="#"
+            to="study-material"
           >
             Study Materials
-          </a>
-          <a
+          </Link>
+          <Link
             style={{
               textDecoration: "none",
               cursor: "pointer",
               color: "black",
               backgroundColor: "white",
             }}
-            href="#"
+            to="about"
           >
             About Us
-          </a>
+          </Link>
+          <Link
+            style={{
+              textDecoration: "none",
+              cursor: "pointer",
+              color: "black",
+              backgroundColor: "white",
+            }}
+            to="contact"
+          >
+            Contact Us
+          </Link>
         </div>
         <div
           className="login"
@@ -143,7 +138,7 @@ const Navbar = () => {
           }}
         >
           <i
-            class="ri-phone-fill"
+            className="ri-phone-fill"
             style={{
               backgroundColor: "#4D55CC",
               color: "white",
@@ -166,11 +161,6 @@ const Navbar = () => {
           </a>
         </div>
       </nav>
-      <div>
-        {currentTab === "home" && <Home />}
-        {currentTab === "about" && <About />}
-        {currentTab === "contact" && <Contact />}
-      </div>
     </>
   );
 };

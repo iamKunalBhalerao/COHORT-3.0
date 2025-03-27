@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Contact = () => {
+const Results = () => {
   return (
     <>
       <div
@@ -21,7 +21,7 @@ const Contact = () => {
         }}
       >
         <h1 style={{ fontSize: "100px", backgroundColor: "transparent" }}>
-          This is Contact Us Page
+          This is Result Page
         </h1>
         <p
           style={{
@@ -40,4 +40,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Results;

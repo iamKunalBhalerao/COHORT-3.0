@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Contact = () => {
+const TestSeries = () => {
   return (
     <>
       <div
@@ -20,8 +20,15 @@ const Contact = () => {
           justifyContent: "center",
         }}
       >
-        <h1 style={{ fontSize: "100px", backgroundColor: "transparent" }}>
-          This is Contact Us Page
+        <h1
+          style={{
+            fontSize: "100px",
+            backgroundColor: "transparent",
+            width: "80%",
+            textAlign: "center",
+          }}
+        >
+          See Your all Upcoming Tests Hear
         </h1>
         <p
           style={{
@@ -40,4 +47,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default TestSeries;
