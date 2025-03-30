@@ -1,70 +1,45 @@
-import React, { createContext, useContext, useState } from "react";
+import React from "react";
+import { RecoilRoot, atom, useRecoilValue, useSetRecoilState } from "recoil";
 
-const CounterContext = createContext();
+const count = atom({
+  key: "countState", // unique ID (with respect to other atoms/selectors)
+  default: 0, // default value (aka initial value)
+});
 
-const ContextProvider = ({ children }) => {
-  const [counter, setCounter] = useState(0);
+function Parent() {
   return (
-    <CounterContext.Provider value={{ counter, setCounter }}>
-      {children}
-    </CounterContext.Provider>
+    <RecoilRoot>
+      <Incrase />
+      <Decrease />
+      <Value />
+    </RecoilRoot>
   );
-};
+}
 
-const Parent = () => {
+function Decrease() {
+  const setCount = useSetRecoilState(count);
   return (
-    <>
-      <ContextProvider>
-        <IncreaseCounter />
-        <DecreaseCounter />
-        <Reset />
-        <Counter />
-      </ContextProvider>
-    </>
+    <button onClick={() => setCount((count) => count - 1)}>Decrease</button>
   );
-};
+}
 
-const IncreaseCounter = () => {
-  const { setCounter } = useContext(CounterContext);
+function Incrase() {
+  const setCount = useSetRecoilState(count);
   return (
-    <>
-      <button onClick={() => setCounter((prev) => prev + 1)}>Increase</button>
-    </>
+    <button onClick={() => setCount((count) => count + 1)}>Increase</button>
   );
-};
+}
 
-const DecreaseCounter = () => {
-  const { setCounter } = useContext(CounterContext);
-  return (
-    <>
-      <button onClick={() => setCounter((prev) => prev - 1)}>Decrease</button>
-    </>
-  );
-};
-
-const Reset = () => {
-  const { setCounter } = useContext(CounterContext);
-  return (
-    <>
-      <button onClick={() => setCounter(0)}>Reset</button>
-    </>
-  );
-};
-
-const Counter = () => {
-  const { counter } = useContext(CounterContext);
-  return (
-    <>
-      <h1>Counter : {counter}</h1>
-    </>
-  );
-};
+function Value() {
+  const countValue = useRecoilValue(count);
+  return <p>Count: {countValue}</p>;
+}
 
 const App = () => {
   return (
-    <>
+    <div>
       <Parent />
-    </>
+    </div>
   );
 };
 
