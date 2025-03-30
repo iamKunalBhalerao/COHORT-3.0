@@ -10,3 +10,17 @@ body {
   height: 100%;
   width: 100%;
 }
+
+div {
+  padding: 2rem;
+  display: inline-grid;
+  gap: 10px;
+}
+
+button {
+  background-color: black;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+}
