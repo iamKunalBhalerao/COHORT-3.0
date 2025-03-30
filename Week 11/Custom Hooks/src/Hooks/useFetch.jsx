@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const useFetch = () => {
+export const usePostTitle = () => {
   const [post, setPost] = useState({});
   const [error, setError] = useState(true);
 
@@ -25,4 +25,17 @@ const useFetch = () => {
   return { post, error };
 };
 
-export default useFetch;
+export const useFetch = (url) => {
+  const [finalData, setFinalData] = useState({});
+
+  async function getDetails() {
+    const response = await fetch(url);
+    const json = await response.json();
+    setFinalData(json);
+  }
+
+  useEffect(() => {
+    getDetails();
+  }, [url]);
+  return { finalData };
+};
