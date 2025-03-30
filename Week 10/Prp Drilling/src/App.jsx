@@ -1,14 +1,61 @@
 import React, { createContext, useContext, useState } from "react";
 
-const BulbContext = createContext();
+const CounterContext = createContext();
 
-const BulbContextProvider = ({ children }) => {
-  const [bulbState, setBulbState] = useState(true);
+const ContextProvider = ({ children }) => {
+  const [counter, setCounter] = useState(0);
+  return (
+    <CounterContext.Provider value={{ counter, setCounter }}>
+      {children}
+    </CounterContext.Provider>
+  );
+};
+
+const Parent = () => {
   return (
     <>
-      <BulbContext.Provider value={{ bulbState, setBulbState }}>
-        {children}
-      </BulbContext.Provider>
+      <ContextProvider>
+        <IncreaseCounter />
+        <DecreaseCounter />
+        <Reset />
+        <Counter />
+      </ContextProvider>
+    </>
+  );
+};
+
+const IncreaseCounter = () => {
+  const { setCounter } = useContext(CounterContext);
+  return (
+    <>
+      <button onClick={() => setCounter((prev) => prev + 1)}>Increase</button>
+    </>
+  );
+};
+
+const DecreaseCounter = () => {
+  const { setCounter } = useContext(CounterContext);
+  return (
+    <>
+      <button onClick={() => setCounter((prev) => prev - 1)}>Decrease</button>
+    </>
+  );
+};
+
+const Reset = () => {
+  const { setCounter } = useContext(CounterContext);
+  return (
+    <>
+      <button onClick={() => setCounter(0)}>Reset</button>
+    </>
+  );
+};
+
+const Counter = () => {
+  const { counter } = useContext(CounterContext);
+  return (
+    <>
+      <h1>Counter : {counter}</h1>
     </>
   );
 };
@@ -16,44 +63,7 @@ const BulbContextProvider = ({ children }) => {
 const App = () => {
   return (
     <>
-      <BulbContextProvider>
-        <Light />
-      </BulbContextProvider>
-    </>
-  );
-};
-
-const Light = () => {
-  return (
-    <>
-      <div style={{ padding: "2rem" }}>
-        <Bulb />
-        <ToggleBulb />
-      </div>
-    </>
-  );
-};
-
-const Bulb = () => {
-  const { bulbState } = useContext(BulbContext);
-
-  return (
-    <>
-      <h1>Bulb is {bulbState ? "On" : "Off"}</h1>
-    </>
-  );
-};
-
-const ToggleBulb = () => {
-  const { setBulbState } = useContext(BulbContext);
-
-  function ToggleBulb() {
-    setBulbState((prev) => !prev);
-  }
-
-  return (
-    <>
-      <button onClick={ToggleBulb}>Toggle</button>
+      <Parent />
     </>
   );
 };
