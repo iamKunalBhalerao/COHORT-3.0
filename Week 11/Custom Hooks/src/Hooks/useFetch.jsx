@@ -25,17 +25,21 @@ export const usePostTitle = () => {
   return { post, error };
 };
 
+// Custom Hook useFetch
 export const useFetch = (url) => {
   const [finalData, setFinalData] = useState({});
+  const [Loading, setLoading] = useState(true);
 
   async function getDetails() {
+    setLoading(true);
     const response = await fetch(url);
     const json = await response.json();
     setFinalData(json);
+    setLoading(false);
   }
 
   useEffect(() => {
     getDetails();
   }, [url]);
-  return { finalData };
+  return { finalData, Loading };
 };
