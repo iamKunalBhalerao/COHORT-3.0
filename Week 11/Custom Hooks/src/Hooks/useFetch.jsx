@@ -26,7 +26,7 @@ export const usePostTitle = () => {
 };
 
 // Custom Hook useFetch
-export const useFetch = (url) => {
+export const useFetch = (url, retryTime) => {
   const [finalData, setFinalData] = useState({});
   const [Loading, setLoading] = useState(true);
 
@@ -41,5 +41,11 @@ export const useFetch = (url) => {
   useEffect(() => {
     getDetails();
   }, [url]);
+
+  useEffect(() => {
+    const clock = setInterval(getDetails, retryTime * 1000);
+    return () => clearInterval(clock);
+  }, []);
+
   return { finalData, Loading };
 };

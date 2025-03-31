@@ -3,7 +3,8 @@ import { useFetch } from "../Hooks/useFetch";
 
 const Post = ({ CounterPost }) => {
   const { finalData, Loading } = useFetch(
-    "https://jsonplaceholder.typicode.com/posts/" + CounterPost
+    `https://jsonplaceholder.typicode.com/posts/${CounterPost}`,
+    5
   );
 
   return (
