@@ -35,18 +35,20 @@ const Button = ({
 
   return (
     <>
-      <button style={btnStyle} onClick={sendNotification}>
-        Send Notification
-      </button>
-      <button style={btnStyle} onClick={sendNetwork}>
-        Send Network Opportunity
-      </button>
-      <button style={btnStyle} onClick={sendJob}>
-        Send Jobs
-      </button>
-      <button style={btnStyle} onClick={sendMessage}>
-        Send Messages
-      </button>
+      <div style={{ display: "flex", gap: "20px" }}>
+        <button style={btnStyle} onClick={sendNotification}>
+          Send Notification
+        </button>
+        <button style={btnStyle} onClick={sendNetwork}>
+          Send Network Opportunity
+        </button>
+        <button style={btnStyle} onClick={sendJob}>
+          Send Jobs
+        </button>
+        <button style={btnStyle} onClick={sendMessage}>
+          Send Messages
+        </button>
+      </div>
     </>
   );
 };

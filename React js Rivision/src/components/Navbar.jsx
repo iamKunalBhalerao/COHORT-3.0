@@ -44,10 +44,12 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
             display: "flex",
             gap: "40px",
             padding: "10px 0",
-            cursor: "pointer",
           }}
         >
-          <div className="Home" style={{ position: "relative" }}>
+          <div
+            className="Home"
+            style={{ position: "relative", cursor: "pointer" }}
+          >
             <img
               src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
               alt="Notifications"
@@ -63,12 +65,15 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
                 fontSize: "12px",
               }}
             >
-              <i class="ri-creative-commons-zero-line"></i>
+              <i className="ri-creative-commons-zero-line"></i>
             </span>
           </div>
-          <div className="Network" style={{ position: "relative" }}>
+          <div
+            className="Network"
+            style={{ position: "relative", cursor: "pointer" }}
+          >
             <i
-              class="ri-group-fill"
+              className="ri-group-fill"
               style={{ fontSize: "33px", color: "black" }}
             ></i>
             <span
@@ -84,9 +89,12 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
               {netWork}
             </span>
           </div>
-          <div className="Jobs" style={{ position: "relative" }}>
+          <div
+            className="Jobs"
+            style={{ position: "relative", cursor: "pointer" }}
+          >
             <i
-              class="ri-briefcase-2-fill"
+              className="ri-briefcase-2-fill"
               style={{ color: "black", fontSize: "33px" }}
             ></i>
             <span
@@ -102,9 +110,12 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
               {jobs}
             </span>
           </div>
-          <div className="Messaging" style={{ position: "relative" }}>
+          <div
+            className="Messaging"
+            style={{ position: "relative", cursor: "pointer" }}
+          >
             <i
-              class="ri-message-3-fill"
+              className="ri-message-3-fill"
               style={{ color: "black", fontSize: "33px" }}
             ></i>
             <span
@@ -120,7 +131,10 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
               {messaging}
             </span>
           </div>
-          <div className="Notifications" style={{ position: "relative" }}>
+          <div
+            className="Notifications"
+            style={{ position: "relative", cursor: "pointer" }}
+          >
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy_EXtATKPKHh9NQshUwkh-cm0WVBl5sI5dA&s"
               alt="Notifications"
@@ -151,7 +165,10 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
               borderLeft: "1px solid rgb(201, 201, 201)",
             }}
           >
-            <i class="ri-layout-masonry-fill" style={{ fontSize: "23px" }}></i>
+            <i
+              className="ri-layout-masonry-fill"
+              style={{ fontSize: "23px" }}
+            ></i>
             <p style={{ fontSize: "10px", color: "gray" }}>Buisness</p>
           </div>
         </div>
