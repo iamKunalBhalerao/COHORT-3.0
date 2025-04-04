@@ -4,8 +4,9 @@ import Headin1 from "../ui/Headin1";
 import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 
-const Jobs = () => {
+const NoPage = () => {
   const navigate = useNavigate();
+
   const redirectUser = () => {
     navigate("/");
   };
@@ -13,11 +14,11 @@ const Jobs = () => {
   return (
     <>
       <Body>
-        <Headin1 tabName={"Jobs"} />
+        <Headin1 tabName={"404 Page Not Found"} />
         <Button onCLickHandler={redirectUser} btnMessage={"Go to Home page"} />
       </Body>
     </>
   );
 };
 
-export default Jobs;
+export default NoPage;

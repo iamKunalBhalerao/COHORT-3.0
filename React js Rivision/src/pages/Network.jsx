@@ -1,27 +1,21 @@
-import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import Children from "../components/Children";
+import React from "react";
+import Body from "../components/Body";
+import Headin1 from "../ui/Headin1";
+import Button from "../ui/Button";
+import { useNavigate } from "react-router-dom";
 
 const Network = () => {
-  const [netWork, setNetwork] = useState(0);
-  const [jobs, setJobs] = useState(0);
-  const [messaging, setMessaging] = useState(0);
-  const [notificationCount, setNotificationCount] = useState(0);
+  const navigate = useNavigate();
+  const redirectUser = () => {
+    navigate("/");
+  };
 
   return (
     <>
-      <Navbar
-        notificationCount={notificationCount}
-        netWork={netWork}
-        jobs={jobs}
-        messaging={messaging}
-      />
-      <Children
-        setNotificationCount={setNotificationCount}
-        setNetwork={setNetwork}
-        setJobs={setJobs}
-        setMessaging={setMessaging}
-      />
+      <Body>
+        <Headin1 tabName={"Networks"} />
+        <Button onCLickHandler={redirectUser} btnMessage={"Go to Home page"} />
+      </Body>
     </>
   );
 };

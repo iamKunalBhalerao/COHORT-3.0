@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
   return (
@@ -50,11 +51,14 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
             className="Home"
             style={{ position: "relative", cursor: "pointer" }}
           >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
-              alt="Notifications"
-              width={33}
-            />
+            <Link to={"/"}>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
+                alt="Notifications"
+                width={33}
+              />
+            </Link>
+
             <span
               style={{
                 backgroundColor: "crimson",
@@ -72,10 +76,12 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
             className="Network"
             style={{ position: "relative", cursor: "pointer" }}
           >
-            <i
-              className="ri-group-fill"
-              style={{ fontSize: "33px", color: "black" }}
-            ></i>
+            <Link to="/network">
+              <i
+                className="ri-group-fill"
+                style={{ fontSize: "33px", color: "black" }}
+              ></i>
+            </Link>
             <span
               style={{
                 backgroundColor: "crimson",
@@ -93,10 +99,12 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
             className="Jobs"
             style={{ position: "relative", cursor: "pointer" }}
           >
-            <i
-              className="ri-briefcase-2-fill"
-              style={{ color: "black", fontSize: "33px" }}
-            ></i>
+            <Link to={"/jobs"}>
+              <i
+                className="ri-briefcase-2-fill"
+                style={{ color: "black", fontSize: "33px" }}
+              ></i>
+            </Link>
             <span
               style={{
                 backgroundColor: "crimson",
@@ -114,10 +122,12 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
             className="Messaging"
             style={{ position: "relative", cursor: "pointer" }}
           >
-            <i
-              className="ri-message-3-fill"
-              style={{ color: "black", fontSize: "33px" }}
-            ></i>
+            <Link to={"/messages"}>
+              <i
+                className="ri-message-3-fill"
+                style={{ color: "black", fontSize: "33px" }}
+              ></i>
+            </Link>
             <span
               style={{
                 backgroundColor: "crimson",
@@ -135,11 +145,13 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
             className="Notifications"
             style={{ position: "relative", cursor: "pointer" }}
           >
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy_EXtATKPKHh9NQshUwkh-cm0WVBl5sI5dA&s"
-              alt="Notifications"
-              width={33}
-            />
+            <Link to={"/notifications"}>
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy_EXtATKPKHh9NQshUwkh-cm0WVBl5sI5dA&s"
+                alt="Notifications"
+                width={33}
+              />
+            </Link>
             <span
               style={{
                 backgroundColor: "crimson",
@@ -165,11 +177,16 @@ const Navbar = ({ netWork, notificationCount, jobs, messaging }) => {
               borderLeft: "1px solid rgb(201, 201, 201)",
             }}
           >
-            <i
-              className="ri-layout-masonry-fill"
-              style={{ fontSize: "23px" }}
-            ></i>
-            <p style={{ fontSize: "10px", color: "gray" }}>Buisness</p>
+            <Link
+              to={"/buisness"}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <i
+                className="ri-layout-masonry-fill"
+                style={{ fontSize: "23px" }}
+              ></i>
+              <p style={{ fontSize: "10px", color: "gray" }}>Buisness</p>
+            </Link>
           </div>
         </div>
       </nav>
