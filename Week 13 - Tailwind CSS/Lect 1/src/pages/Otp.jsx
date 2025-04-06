@@ -35,12 +35,18 @@ const Otp = () => {
                 onDone={() => {
                   ref2.current.focus();
                 }}
+                onBack={() => {
+                  ref1.current.focus();
+                }}
                 type={"text"}
               />
               <SubOtpBox
                 ref={ref2}
                 onDone={() => {
                   ref3.current.focus();
+                }}
+                onBack={() => {
+                  ref1.current.focus();
                 }}
                 type={"text"}
               />
@@ -49,12 +55,18 @@ const Otp = () => {
                 onDone={() => {
                   ref4.current.focus();
                 }}
+                onBack={() => {
+                  ref2.current.focus();
+                }}
                 type={"text"}
               />
               <SubOtpBox
                 ref={ref4}
                 onDone={() => {
                   ref5.current.focus();
+                }}
+                onBack={() => {
+                  ref3.current.focus();
                 }}
                 type={"text"}
               />
@@ -63,12 +75,19 @@ const Otp = () => {
                 onDone={() => {
                   ref6.current.focus();
                 }}
+                onBack={() => {
+                  ref4.current.focus();
+                }}
                 type={"text"}
               />
               <SubOtpBox
                 ref={ref6}
                 onDone={() => {
-                  setBtnDisabled((prev) => !prev);
+                  setBtnDisabled(false);
+                }}
+                onBack={() => {
+                  ref5.current.focus();
+                  setBtnDisabled(true);
                 }}
                 type={"text"}
               />
