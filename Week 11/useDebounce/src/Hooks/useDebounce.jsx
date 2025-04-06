@@ -1,14 +1,18 @@
-import React, { useRef } from "react";
+import { useEffect, useState } from "react";
 
-const useDebounce = (orignalFn) => {
-  const currentClock = useRef();
+const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
-  const fn = () => {
-    clearTimeout(currentClock.current);
-    currentClock.current = setTimeout(orignalFn, 700);
-  };
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay || 500);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value]);
 
-  return fn;
+  return debouncedValue;
 };
 
 export default useDebounce;

@@ -88,6 +88,7 @@ const Login = () => {
                 borderRadius: "10px",
                 marginBottom: "20px",
               }}
+              required
             />
             <p
               style={{
@@ -110,6 +111,7 @@ const Login = () => {
                 border: "1px solid #E4EFE7",
                 borderRadius: "10px",
               }}
+              required
             />
 
             <button
