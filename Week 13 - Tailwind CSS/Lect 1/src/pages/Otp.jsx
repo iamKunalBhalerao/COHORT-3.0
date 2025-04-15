@@ -15,6 +15,7 @@ const Otp = () => {
   const ref4 = useRef();
   const ref5 = useRef();
   const ref6 = useRef();
+  const btnRef = useRef();
 
   return (
     <>
@@ -83,6 +84,7 @@ const Otp = () => {
               <SubOtpBox
                 ref={ref6}
                 onDone={() => {
+                  btnRef.current.focus();
                   setBtnDisabled(false);
                 }}
                 onBack={() => {
@@ -92,7 +94,7 @@ const Otp = () => {
                 type={"text"}
               />
             </div>
-            <Button disabled={btnDisabled} onClick={btnOnClick}>
+            <Button ref={btnRef} disabled={btnDisabled} onClick={btnOnClick}>
               Continue
             </Button>
             <p className="text-zinc-400 text-lg">

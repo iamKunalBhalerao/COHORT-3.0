@@ -7,7 +7,7 @@ const App = () => {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex h-screen">
         <Sidebar
           sidebarToggle={sidebarToggle}
           setsidebarToggle={setsidebarToggle}
