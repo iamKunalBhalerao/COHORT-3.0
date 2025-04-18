@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.use("/api/v1/", TodoRouter);
 
-app.listen(process.env.PORT, () => {
-  connectDB();
-  console.log(`server is running on PORT${process.env.PORT}`);
+app.listen(process.env.PORT, async () => {
+  await connectDB();
+  console.log(`server is running on PORT:${process.env.PORT}`);
 });
