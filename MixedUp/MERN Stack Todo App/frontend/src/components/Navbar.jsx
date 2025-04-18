@@ -8,7 +8,7 @@ const Navbar = () => {
         <NavLink className="text-3xl font-bold text-blue-500" to="/">
           .Tasker
         </NavLink>
-        <div className="flex items-center py-6 justify-center gap-4">
+        <div className="flex items-center py-6 justify-center gap-8">
           <NavLink
             className="text-xl font-normal transition-all delay-100 duration-200 ease-linear text-blue-900 hover:text-blue-500"
             to="/"
@@ -26,12 +26,6 @@ const Navbar = () => {
             to="/create"
           >
             Create Todo
-          </NavLink>
-          <NavLink
-            className="text-xl font-normal  transition-all delay-100 duration-200 ease-linear text-blue-900 hover:text-blue-500"
-            to="/update"
-          >
-            Update Todo
           </NavLink>
         </div>
       </nav>
