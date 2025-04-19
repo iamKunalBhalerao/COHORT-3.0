@@ -34,7 +34,7 @@ const seeAllTodos = asyncHandler(async (req, res) => {
 
     res.status(200).json({
       message: "This is All Todos all you created",
-      Todos: todos,
+      todos: todos,
     });
   } catch (error) {
     res.status(403).json("Something Went Wrong !!!", error);
@@ -75,15 +75,14 @@ const deleteTodo = asyncHandler(async (req, res) => {
   try {
     const user = await Todo.findByIdAndDelete({ _id: req.body.id });
 
-    if(!user) {
-        res.status(401).json({
-          message: "Who Are You !!!",
-        });
+    if (!user) {
+      res.status(401).json({
+        message: "Who Are You !!!",
+      });
     }
     res.status(200).json({
       message: "Todo deleted Successfully.",
     });
-
   } catch (error) {
     res.status(402).json({
       message: "Something Went Wrong while deleting todo s!!!",

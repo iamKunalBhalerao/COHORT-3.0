@@ -1,17 +1,35 @@
-import React from "react";
-import TodoCard from "../components/TodoCard";
+import React, { useEffect, useState } from "react";
+import TodoCard from "../components/TodoCard.jsx";
 
 const SeeTodos = () => {
-  let title = "This is Title of card";
-  let description =
-    "This is description that is new carosfjinis is description that is new carosfjinis is description that is new carosfjinis is description that is new carosfjinis is description that is new carosfjinv v of card";
+  const [todos, setTodos] = useState([]);
+
+  const fetchData = () => {
+    fetch("http://localhost:3000/api/v1/todos").then(async (res) => {
+      const json = await res.json();
+      setTodos(json.todos);
+    });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [setTodos]);
 
   return (
     <>
-      <section className="w-full h-auto flex flex-col items-center justify-center gap-4 p-4">
-        <TodoCard title={title} description={description} isComplete={false} />
-        <TodoCard title={title} description={description} isComplete={true} />
-        <TodoCard title={title} description={description} isComplete={false} />
+      <section className="w-full h-auto flex flex-col items-center justify-center gap-2 p-4">
+        {todos.map((todo, index) => {
+          return (
+            <TodoCard
+              key={index}
+              title={todo.title}
+              description={todo.description}
+              isComplete={
+                todo.iscomplete == true ? "Completed" : "Mark as Complete"
+              }
+            />
+          );
+        })}
       </section>
     </>
   );
