@@ -26,6 +26,7 @@ const CreateTodo = () => {
               type="text"
               name="title"
               placeholder="Enter Title Hear...."
+              required
               className="w-full px-4 py-2 outline-0 focus:outline-1 focus:outline-blue-300 boreder-1 border-zinc-200 rounded-lg bg-zinc-100"
             />
             <textarea
@@ -33,6 +34,7 @@ const CreateTodo = () => {
               type="text"
               name="title"
               placeholder="Enter Description Hear...."
+              required
               className="w-full px-4 py-2 outline-0 focus:outline-1 focus:outline-blue-300 boreder-1 border-zinc-200 rounded-lg bg-zinc-100"
             />
             <button
