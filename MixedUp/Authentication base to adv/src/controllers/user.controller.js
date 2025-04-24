@@ -1,11 +1,32 @@
 const User = require("../models/user.model");
+const zod = require("zod");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const signup = async (req, res) => {
-  const { username, email, password } = req.body;
+  // get user details that we want to store in DB
+  // validate inputs with basic js or a validation librery like "zod"
+  // check if given email or username is alredy is in the DB or not, if not then follow next step
+  // convert password into hash format
+  // Create user in DB
 
   try {
+    const { username, email, password } = req.body;
+
+    const requireBody = zod.object({
+      username: zod.string().min(3).max(40),
+      email: zod.string().min(3).max(150).isEmail(),
+      password: zod.string().min(6).max(100),
+    });
+
+    const parseRequireBody = requireBody.safeParse(req.body);
+
+    if (!parseRequireBody.success) {
+      res.status(405).json({
+        message: "Invalid Credentials !!!",
+      });
+    }
+
     const findUser = await User.findOne({ email: email });
 
     if (findUser) {
@@ -26,14 +47,11 @@ const signup = async (req, res) => {
       username,
       email,
       password: hashedPassword,
-    });
+    }).select("-password");
 
     res.status(200).json({
       message: "User Created Successfully.",
-      user: {
-        username: createUser.username,
-        email: createUser.email,
-      },
+      user: createUser,
     });
   } catch (error) {
     res.status(406).json({
