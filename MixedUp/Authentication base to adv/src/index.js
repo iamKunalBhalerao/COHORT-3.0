@@ -4,22 +4,11 @@ const app = express();
 
 app.use(express.json());
 
-app.get("/", async (req, res) => {
-  try {
-    const response = await fetch("https://fakerapi.it/api/v1/persons");
-    const finalData = await response.json();
-    // console.log(finalData);
+// User Route Imports
+const UserRouter = require("./routes/user.route");
 
-    res.status(finalData.code).json({
-      finalData: finalData.data,
-    });
-  } catch (error) {
-    res.status(403).json({
-      message: "Someting went wrong while fetching data !!!",
-      Error: error,
-    });
-  }
-});
+// User Route Defines
+app.use("/api/v1/user/", UserRouter);
 
 app.listen(3000, () => {
   connectDB();
