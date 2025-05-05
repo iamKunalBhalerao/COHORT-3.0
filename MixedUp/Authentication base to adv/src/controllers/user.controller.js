@@ -60,10 +60,34 @@ const signin = async (req, res) => {
   }
 };
 
+const users = async (req, res) => {
+  const token = req.headers.Authorization;
+
+  try {
+    const decodedData = jwt.verify(token, ACCESS_TOKEN_SECRET);
+
+    if (decodedData) {
+      console.log(decodedData.username);
+    }
+
+    const users = await User.find({});
+
+    res.status.json({
+      users,
+    });
+  } catch (error) {
+    res.status(408).json({
+      message: "Something Went Wrong !!!",
+      Error: error,
+    });
+  }
+};
+
 const logout = async (req, res) => {};
 
 module.exports = {
   signup,
   signin,
+  users,
   logout,
 };
