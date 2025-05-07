@@ -10,7 +10,7 @@ const UserRouter = Router();
 
 UserRouter.route("/signup").post(signup);
 UserRouter.route("/signin").post(signin);
-UserRouter.route("/users").post(users);
+UserRouter.route("/users").get(users);
 UserRouter.route("/logout").post(logout);
 
 module.exports = UserRouter;

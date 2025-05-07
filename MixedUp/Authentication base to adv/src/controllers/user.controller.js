@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const ACCESS_TOKEN_SECRET = "THISISVERYHIGHSECURITYTOKEN1567";
 const User = require("../models/user.model");
 
 const signup = async (req, res) => {
@@ -40,14 +39,13 @@ const signin = async (req, res) => {
     const user = await User.findOne({ email: email });
 
     if (!user) {
-      throw "User Not Found !!!";
+      throw "Invalid Credentials !!!";
     }
 
-    if (!(password == user.password)) {
-      throw "password is Incorrect !!!";
-    }
-
-    const token = await jwt.sign({ email }, ACCESS_TOKEN_SECRET);
+    const token = await jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.ACCESS_TOKEN_SECRET
+    );
 
     res.status(200).json({
       token,
@@ -61,14 +59,16 @@ const signin = async (req, res) => {
 };
 
 const users = async (req, res) => {
-  const token = req.headers.Authorization;
-
   try {
-    const decodedData = jwt.verify(token, ACCESS_TOKEN_SECRET);
+    const token = req.headers.Authorization;
+    const decodedData = await jwt.verify(
+      token,
+      process.env.ACCESS_TOKEN_SECRET
+    );
 
-    if (decodedData) {
-      console.log(decodedData.username);
-    }
+    console.log(decodedData.email);
+    // if (decodedData) {
+    // }
 
     const users = await User.find({});
 

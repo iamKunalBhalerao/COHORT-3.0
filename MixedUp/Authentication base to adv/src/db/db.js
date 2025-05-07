@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 
-const connectDB = () => {
+const connectDB = async () => {
   try {
-    mongoose.connect(
-      "mongodb+srv://kunalbhalerao789:kunal%407890@dbadvanced.fba8g5o.mongodb.net/advbackend"
+    const connectionInstance = await mongoose.connect(
+      `${process.env.MONGO_URI}`
     );
-    console.log(`Connected To Database.`);
+    console.log(
+      `Connected to Database. DB HOST : ${connectionInstance.connection.host}`
+    );
   } catch (error) {
     console.log(`Error while connecting to Database, DB ERROR:${error}`);
   }
