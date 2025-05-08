@@ -60,24 +60,14 @@ const signin = async (req, res) => {
 
 const users = async (req, res) => {
   try {
-    const token = req.headers.Authorization;
-    const decodedData = await jwt.verify(
-      token,
-      process.env.ACCESS_TOKEN_SECRET
-    );
-
-    console.log(decodedData.email);
-    // if (decodedData) {
-    // }
-
     const users = await User.find({});
 
-    res.status.json({
+    res.status(200).json({
       users,
     });
   } catch (error) {
-    res.status(408).json({
-      message: "Something Went Wrong !!!",
+    res.status(403).json({
+      message: "Something Went Wrong while getting all users !!!",
       Error: error,
     });
   }

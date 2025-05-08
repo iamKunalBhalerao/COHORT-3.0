@@ -5,12 +5,13 @@ const {
   logout,
   users,
 } = require("../controllers/user.controller.js");
+const authMiddleware = require("../middlewares/auth.middleware.js");
 
 const UserRouter = Router();
 
 UserRouter.route("/signup").post(signup);
 UserRouter.route("/signin").post(signin);
-UserRouter.route("/users").get(users);
-UserRouter.route("/logout").post(logout);
+UserRouter.route("/users").get(authMiddleware, users);
+UserRouter.route("/logout").post(authMiddleware, logout);
 
 module.exports = UserRouter;

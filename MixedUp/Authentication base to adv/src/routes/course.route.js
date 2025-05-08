@@ -7,10 +7,11 @@ const {
   updateCourse,
   deleteCourse,
 } = require("../controllers/course.controller");
+const authMiddleware = require("../middlewares/auth.middleware");
 
-courseRouter.get("/courses", allCourses);
-courseRouter.post("/create", createCourse);
-courseRouter.put("/update", updateCourse);
-courseRouter.delete("/delete", deleteCourse);
+courseRouter.route("/courses").get(allCourses);
+courseRouter.route("/create").post(authMiddleware, createCourse);
+courseRouter.route("/update").put(authMiddleware, updateCourse);
+courseRouter.route("/delete").delete(authMiddleware, deleteCourse);
 
 module.exports = courseRouter;

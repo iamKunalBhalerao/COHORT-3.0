@@ -4,15 +4,15 @@ const courseSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, "Title is required !!!"],
     },
     description: {
       type: String,
-      required: true,
+      required: [true, "Description is required !!!"],
     },
     price: {
       type: Number,
-      required: true,
+      required: [true, "Price is required !!!"],
     },
     creatorId: {
       type: Schema.Types.ObjectId,

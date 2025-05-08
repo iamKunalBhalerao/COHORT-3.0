@@ -7,6 +7,7 @@ const allCourses = async (req, res) => {
 };
 
 const createCourse = async (req, res) => {
+  const creatorId = req.userId;
   const { title, description, price } = req.body;
 
   try {
@@ -20,6 +21,7 @@ const createCourse = async (req, res) => {
       title,
       description,
       price,
+      creatorId: creatorId,
     });
 
     res.status(200).json({
@@ -28,6 +30,7 @@ const createCourse = async (req, res) => {
         Title: course.title,
         Desctiption: course.description,
         Price: course.price,
+        creatorId: course.creatorId,
       },
     });
   } catch (error) {

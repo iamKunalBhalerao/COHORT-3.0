@@ -13,7 +13,7 @@ const SeeTodos = () => {
 
   useEffect(() => {
     fetchData();
-  }, [setTodos]);
+  }, []);
 
   return (
     <>
@@ -24,9 +24,9 @@ const SeeTodos = () => {
               key={index}
               title={todo.title}
               description={todo.description}
-              isComplete={
-                todo.iscomplete == true ? "Completed" : "Mark as Complete"
-              }
+              // isComplete={
+              //   todo.iscomplete == true ? "Completed" : "Mark as Complete"
+              // }
             />
           );
         })}

@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { RiDeleteBin3Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
-const TodoCard = ({ title, description, isComplete }) => {
+const TodoCard = ({ title, description }) => {
+  const [isComplete, setIsComplete] = useState([]);
+
+  const fetchData = () => {
+    fetch("http://localhost:3000/api/v1/completed", {
+      method: "PUT",
+    }).then(async (res) => {
+      const json = await res.json();
+      setIsComplete(json.todos.isComplete);
+    });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <div className="w-[80%] flex items-center justify-between p-4 rounded-lg bg-white shadow-sm border-1 border-zinc-200">
@@ -14,9 +29,9 @@ const TodoCard = ({ title, description, isComplete }) => {
           <p className="w-full flex flex-wrap text-lg pr-4 text-zinc-800">
             {description}
           </p>
-          <button className="cursor-pointer">
+          <button className="cursor-pointer" onClick={fetchData}>
             <span className="w-1/9 text-center p-1 bg-green-500 text-white rounded-lg px-2">
-              {isComplete}
+              {isComplete == true ? "Completed" : "Mark as Complete"}
             </span>
           </button>
         </div>

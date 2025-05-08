@@ -65,6 +65,9 @@ const updateTodo = asyncHandler(async (req, res) => {
     }
     res.status(200).json({
       message: "Your Todo is mark as Completed.",
+      todos: {
+        isComplete: updateTodo.isComplete,
+      },
     });
   } catch (error) {
     res.status(403).json("Something Went Wrong while updating Todo !!!", error);
