@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 
 const signup = async (req, res) => {
@@ -11,10 +12,12 @@ const signup = async (req, res) => {
       throw "User Alredy Exists !!!";
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const createUser = await User.create({
       username,
       email,
-      password,
+      password: hashedPassword,
     });
 
     res.status(200).json({
@@ -40,6 +43,12 @@ const signin = async (req, res) => {
 
     if (!user) {
       throw "Invalid Credentials !!!";
+    }
+
+    const comparePassword = await bcrypt.compare(password, user.password);
+
+    if (!comparePassword) {
+      throw "Password is Incorrect !!!";
     }
 
     const token = await jwt.sign(
