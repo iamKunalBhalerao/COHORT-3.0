@@ -50,16 +50,10 @@ const signup = async (req, res) => {
       throw "User Alredy Exists !!!";
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    if (!hashedPassword) {
-      throw "Error While Hashing Password !!!";
-    }
-
     const createUser = await User.create({
       username,
       email,
-      password: hashedPassword,
+      password,
     });
 
     res.status(200).json({
@@ -89,9 +83,7 @@ const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email) {
-      throw "Email and password is required !!!";
-    }
+    // validate credentials with zod
 
     const user = await User.findOne({ email: email });
 
@@ -100,13 +92,11 @@ const signin = async (req, res) => {
         message: "User Does not Exists !!!",
       });
     }
-
     const isPasswordCorrect = await user.comparePassword(password);
+    // const validatePassword = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      res.status(401).json({
-        message: "Invalid User Credentials !!!",
-      });
+      throw "Invalid Password";
     }
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
@@ -133,7 +123,7 @@ const signin = async (req, res) => {
         refreshToken,
       });
   } catch (error) {
-    res.status(405).json({
+    res.status(400).json({
       message: "Something Went Wrong !!!",
       Error: error,
     });
@@ -156,6 +146,35 @@ const users = async (req, res) => {
 };
 
 const logout = async (req, res) => {
+  // finding user and updated their refreshToken in DB as undefined
+  try {
+    await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: { refreshToken: undefined },
+    },
+    {
+      new: true,
+    }
+  );
+
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
+
+  return res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
+    .json({
+      message: "User is Logged Out !",
+    });
+  } catch (error) {
+    res.status(401).json({
+      message: "Something Went Wrong !!!"
+    })
+  }
   
 };
 

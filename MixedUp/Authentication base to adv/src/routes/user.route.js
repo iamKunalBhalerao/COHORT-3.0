@@ -11,6 +11,8 @@ const UserRouter = Router();
 
 UserRouter.route("/signup").post(signup);
 UserRouter.route("/signin").post(signin);
+
+// Secured Routes
 UserRouter.route("/users").get(authMiddleware, users);
 UserRouter.route("/logout").post(authMiddleware, logout);
 
