@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 
 // Method for generating Access and Refresh Token
@@ -149,33 +148,92 @@ const logout = async (req, res) => {
   // finding user and updated their refreshToken in DB as undefined
   try {
     await User.findByIdAndUpdate(
-    req.user._id,
-    {
-      $set: { refreshToken: undefined },
-    },
-    {
-      new: true,
-    }
-  );
+      req.user._id,
+      {
+        $set: { refreshToken: undefined },
+      },
+      {
+        new: true,
+      }
+    );
 
-  const options = {
-    httpOnly: true,
-    secure: true,
-  };
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
 
-  return res
-    .status(200)
-    .clearCookie("accessToken", options)
-    .clearCookie("refreshToken", options)
-    .json({
-      message: "User is Logged Out !",
-    });
+    return res
+      .status(200)
+      .clearCookie("accessToken", options)
+      .clearCookie("refreshToken", options)
+      .json({
+        message: "User is Logged Out !",
+      });
   } catch (error) {
     res.status(401).json({
-      message: "Something Went Wrong !!!"
-    })
+      message: "Something Went Wrong !!!",
+      Error: error,
+    });
   }
-  
+};
+
+const refreshAccessToken = async (req, res) => {
+  try {
+    const incommingRefreshToken =
+      req.cookies.refreshToken || req.body.refreshToken;
+
+    if (!incommingRefreshToken) {
+      res.status(401).json({
+        message: "Unauthorized Request !!!",
+      });
+    }
+
+    const decodedToken = jwt.verify(
+      incommingRefreshToken,
+      process.env.REFRESH_TOKEN_SECRET
+    );
+
+    const user = await User.findById(decodedToken?._id);
+
+    if (!user) {
+      res.status(401).json({
+        message: "Invalid Refresh Token !!!",
+      });
+    }
+
+    if (incommingRefreshToken !== user?.refreshToken) {
+      res.status(401).json({
+        message: "RefreshToken is Expired or used !!!",
+      });
+    }
+
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+
+    const { accessToken, newRefreshToken } =
+      await generateAccessAndRefreshToken(user._id);
+
+    const loggedInUser = await User.findById(user._id).select(
+      "-password -refreshToken"
+    );
+
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", newRefreshToken, options)
+      .json({
+        message: "User Logged In Successfully",
+        loggedInUser,
+        accessToken,
+        newRefreshToken,
+      });
+  } catch (error) {
+    res.status(403).json({
+      message: "Something Went Wrong while refreshing Access Token !!!",
+    });
+  }
 };
 
 module.exports = {
@@ -183,4 +241,5 @@ module.exports = {
   signin,
   users,
   logout,
+  refreshAccessToken,
 };

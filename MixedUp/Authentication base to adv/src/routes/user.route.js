@@ -4,6 +4,7 @@ const {
   signin,
   logout,
   users,
+  refreshAccessToken,
 } = require("../controllers/user.controller.js");
 const authMiddleware = require("../middlewares/auth.middleware.js");
 
@@ -15,5 +16,6 @@ UserRouter.route("/signin").post(signin);
 // Secured Routes
 UserRouter.route("/users").get(authMiddleware, users);
 UserRouter.route("/logout").post(authMiddleware, logout);
+UserRouter.route("/refresh-token").post(refreshAccessToken);
 
 module.exports = UserRouter;
