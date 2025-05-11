@@ -5,6 +5,7 @@ const UserSchema = new Schema(
   {
     username: {
       type: String,
+      index: true,
       required: true,
     },
     email: {
@@ -19,7 +20,7 @@ const UserSchema = new Schema(
     },
     refreshToken: {
       type: String,
-      required: true,
+      default: "",
     },
   },
   { timestamps: true }

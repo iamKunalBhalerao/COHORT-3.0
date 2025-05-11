@@ -3,16 +3,34 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 
 const signup = async (req, res) => {
+  // get user details
+  // find in DB is their any existing user si available with same credentials
+  // hash passwor dusing bcrypt libreary
+  // create user with credentials send by user with hashed password
+  // send the required response to frintend
+
   try {
     const { username, email, password } = req.body;
 
-    const findUser = await User.findOne({ email: email });
+    // validate user inputs with zod
+
+    if (!username || !email || !password) {
+      throw "Username, Email, and Password are required!";
+    }
+
+    const findUser = await User.findOne({
+      $or: [{ username }, { email }],
+    });
 
     if (findUser) {
       throw "User Alredy Exists !!!";
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    if (!hashedPassword) {
+      throw "Error While Hashing Password !!!";
+    }
 
     const createUser = await User.create({
       username,
@@ -28,7 +46,7 @@ const signup = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(405).json({
+    res.status(400).json({
       message: "Something Went Wrong !!!",
       Error: error,
     });
