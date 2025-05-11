@@ -2,6 +2,30 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 
+// Method for generating Access and Refresh Token
+
+const generateAccessAndRefreshToken = async (userId) => {
+  try {
+    const user = await User.findById(userId);
+
+    const accessToken = await user.generateAccessToken();
+    const refreshToken = await user.generateRefreshToken();
+
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave: false });
+
+    return {
+      accessToken,
+      refreshToken,
+    };
+  } catch (error) {
+    res.status(500).json({
+      message: "Error While generating Access and Refresh Token !!!",
+      Error: error,
+    });
+  }
+};
+
 const signup = async (req, res) => {
   // get user details
   // find in DB is their any existing user si available with same credentials
@@ -54,29 +78,60 @@ const signup = async (req, res) => {
 };
 
 const signin = async (req, res) => {
+  // get email and password from user
+  // check if email aand password is correct or not
+  // if incorrect then send error email or password is incoorect
+  // if correct then compare hashed password and validate it
+  // if password is correct
+  // then generate access token and refres token
+  // and save it in cookie header or localstorage
+
   try {
     const { email, password } = req.body;
+
+    if (!email) {
+      throw "Email and password is required !!!";
+    }
 
     const user = await User.findOne({ email: email });
 
     if (!user) {
-      throw "Invalid Credentials !!!";
+      res.status(404).json({
+        message: "User Does not Exists !!!",
+      });
     }
 
-    const comparePassword = await bcrypt.compare(password, user.password);
+    const isPasswordCorrect = await user.comparePassword(password);
 
-    if (!comparePassword) {
-      throw "Password is Incorrect !!!";
+    if (!isPasswordCorrect) {
+      res.status(401).json({
+        message: "Invalid User Credentials !!!",
+      });
     }
 
-    const token = await jwt.sign(
-      { id: user._id, email: user.email },
-      process.env.ACCESS_TOKEN_SECRET
+    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
+      user._id
     );
 
-    res.status(200).json({
-      token,
-    });
+    const logedInUser = await User.findById(user._id).select(
+      "-password -refreshToken"
+    );
+
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
+      .json({
+        message: "User Logged In Successfully",
+        logedInUser,
+        accessToken,
+        refreshToken,
+      });
   } catch (error) {
     res.status(405).json({
       message: "Something Went Wrong !!!",
@@ -100,7 +155,9 @@ const users = async (req, res) => {
   }
 };
 
-const logout = async (req, res) => {};
+const logout = async (req, res) => {
+  
+};
 
 module.exports = {
   signup,
