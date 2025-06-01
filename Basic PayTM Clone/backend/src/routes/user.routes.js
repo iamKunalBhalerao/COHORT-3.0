@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  allUsers,
   refreshAccessAndRefreshToken,
   searchFriend,
   signin,
@@ -15,5 +16,6 @@ userRouter.route("/signin").post(signin);
 userRouter.route("/refreshtokens").post(refreshAccessAndRefreshToken);
 userRouter.route("/update").put(authMiddleware, updateUser);
 userRouter.route("/searchfriend").get(authMiddleware, searchFriend);
+userRouter.route("/bulk").get(allUsers);
 
 export default userRouter;

@@ -14,8 +14,10 @@ app.use(cookieParser());
 
 // Route Imports
 import userRouter from "./routes/user.routes.js";
+import accountRouter from "./routes/account.routes.js";
 
 // Route Defines
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/account", accountRouter);
 
 export default app;

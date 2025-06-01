@@ -1,8 +1,9 @@
 import zod from "zod";
 import bcrypt from "bcrypt";
-import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { cookieOptions } from "../config.js";
+import User from "../models/user.model.js";
+import Account from "../models/account.model.js";
 
 const signup = async (req, res) => {
   try {
@@ -36,10 +37,46 @@ const signup = async (req, res) => {
       password: hashedPassword,
     });
 
-    res.status(200).json({
-      message: "You are Successfully Signed Up.",
-      user,
+    const userId = user?._id;
+
+    const account = await Account.create({
+      userId,
+      balance: 1000,
     });
+
+    const accessToken = await jwt.sign(
+      {
+        _id: user?._id,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        email: user?.email,
+      },
+      process.env.ACCESS_TOKEN_JWT_SECRET,
+      { expiresIn: process.env.ACCESS_TOKEN_EXPIREY }
+    );
+
+    const refreshToken = await jwt.sign(
+      {
+        _id: user?._id,
+        email: user?.email,
+      },
+      process.env.REFRESH_TOKEN_JWT_SECRET,
+      { expiresIn: process.env.REFRESH_TOKEN_EXPIREY }
+    );
+
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave: false });
+
+    res
+      .status(200)
+      .cookie("acceessToken", accessToken, cookieOptions)
+      .cookie("refreshToken", refreshToken, cookieOptions)
+      .json({
+        message:
+          "You are Successfully Signed Up || With 1000 Rs. Account Bonus.",
+        user,
+        account,
+      });
   } catch (error) {
     res.status(403).json({
       message: "Error while Creating User !!!",
@@ -256,10 +293,24 @@ const searchFriend = async (req, res) => {
   }
 };
 
+const allUsers = async (req, res) => {
+  try {
+    const users = await User.find({}).select("-password -refreshToken");
+
+    res.status(200).json({ users });
+  } catch (error) {
+    res.status(403).json({
+      message: "Error While Finding User",
+      Error: error,
+    });
+  }
+};
+
 export {
   signup,
   signin,
   refreshAccessAndRefreshToken,
   updateUser,
   searchFriend,
+  allUsers,
 };
