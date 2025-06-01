@@ -222,4 +222,44 @@ const updateUser = async (req, res) => {
   }
 };
 
-export { signup, signin, refreshAccessAndRefreshToken, updateUser };
+const searchFriend = async (req, res) => {
+  try {
+    const filter = req.query.filter;
+
+    const users = await User.find({
+      $or: [
+        {
+          firstName: {
+            $regex: filter,
+          },
+        },
+        {
+          lastName: {
+            $regex: filter,
+          },
+        },
+      ],
+    });
+
+    res.status(200).json({
+      user: users.map((user) => ({
+        FirstName: user.firstName,
+        LastName: user.lastName,
+        _id: user._id,
+      })),
+    });
+  } catch (error) {
+    res.status(403).json({
+      message: "Error While Finding User",
+      Error: error,
+    });
+  }
+};
+
+export {
+  signup,
+  signin,
+  refreshAccessAndRefreshToken,
+  updateUser,
+  searchFriend,
+};

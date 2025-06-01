@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   refreshAccessAndRefreshToken,
+  searchFriend,
   signin,
   signup,
   updateUser,
@@ -13,5 +14,6 @@ userRouter.route("/signup").post(signup);
 userRouter.route("/signin").post(signin);
 userRouter.route("/refreshtokens").post(refreshAccessAndRefreshToken);
 userRouter.route("/update").put(authMiddleware, updateUser);
+userRouter.route("/searchfriend").get(authMiddleware, searchFriend);
 
 export default userRouter;
