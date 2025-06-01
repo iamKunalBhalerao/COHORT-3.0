@@ -1,1 +1,8 @@
-export const DBName = "newDB";
+const DBName = "newDB";
+
+const cookieOptions = {
+  httpOnly: true,
+  secure: true,
+};
+
+export { DBName, cookieOptions };
