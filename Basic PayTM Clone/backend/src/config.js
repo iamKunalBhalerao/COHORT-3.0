@@ -1,4 +1,4 @@
-const DBName = "newDB";
+const DBName = "PayTM-Clone";
 
 const cookieOptions = {
   httpOnly: true,

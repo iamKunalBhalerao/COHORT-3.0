@@ -191,4 +191,35 @@ const refreshAccessAndRefreshToken = async (req, res) => {
   }
 };
 
-export { signup, signin, refreshAccessAndRefreshToken };
+const updateUser = async (req, res) => {
+  try {
+    const { firstName, lastName, email } = req.body;
+    const userId = req.user?._id;
+
+    const requireBody = zod.object({
+      firstName: zod.string().min(3).max(100),
+      lastName: zod.string().min(3).max(100),
+      email: zod.string().min(3).max(100).email(),
+    });
+
+    const parseRequireBody = requireBody.safeParse(req.body);
+
+    if (!parseRequireBody.success) {
+      throw "Invalid Credentials !!!";
+    }
+
+    const user = await User.findByIdAndUpdate(userId, req.body, { new: true });
+
+    res.status(200).json({
+      message: "Your Info. is Updated Successfully",
+      user,
+    });
+  } catch (error) {
+    res.status(403).json({
+      message: "Error while Updating User !!!",
+      Error: error,
+    });
+  }
+};
+
+export { signup, signin, refreshAccessAndRefreshToken, updateUser };
