@@ -44,7 +44,7 @@ const signup = async (req, res) => {
       balance: 1000,
     });
 
-    const accessToken = await jwt.sign(
+    const AccessToken = await jwt.sign(
       {
         _id: user?._id,
         firstName: user?.firstName,
@@ -55,7 +55,7 @@ const signup = async (req, res) => {
       { expiresIn: process.env.ACCESS_TOKEN_EXPIREY }
     );
 
-    const refreshToken = await jwt.sign(
+    const RefreshToken = await jwt.sign(
       {
         _id: user?._id,
         email: user?.email,
@@ -64,13 +64,13 @@ const signup = async (req, res) => {
       { expiresIn: process.env.REFRESH_TOKEN_EXPIREY }
     );
 
-    user.refreshToken = refreshToken;
+    user.refreshToken = RefreshToken;
     await user.save({ validateBeforeSave: false });
 
     res
       .status(200)
-      .cookie("acceessToken", accessToken, cookieOptions)
-      .cookie("refreshToken", refreshToken, cookieOptions)
+      .cookie("acceessToken", AccessToken, cookieOptions)
+      .cookie("refreshToken", RefreshToken, cookieOptions)
       .json({
         message:
           "You are Successfully Signed Up || With 1000 Rs. Account Bonus.",
@@ -112,7 +112,7 @@ const signin = async (req, res) => {
       throw "Password is Incorrect !!!";
     }
 
-    const accessToken = await jwt.sign(
+    const AccessToken = await jwt.sign(
       {
         _id: user?._id,
         firstName: user?.firstName,
@@ -123,7 +123,7 @@ const signin = async (req, res) => {
       { expiresIn: process.env.ACCESS_TOKEN_EXPIREY }
     );
 
-    const refreshToken = await jwt.sign(
+    const RefreshToken = await jwt.sign(
       {
         _id: user?._id,
         email: user?.email,
@@ -132,13 +132,13 @@ const signin = async (req, res) => {
       { expiresIn: process.env.REFRESH_TOKEN_EXPIREY }
     );
 
-    user.refreshToken = refreshToken;
+    user.refreshToken = RefreshToken;
     await user.save({ validateBeforeSave: false });
 
     res
       .status(200)
-      .cookie("acceessToken", accessToken, cookieOptions)
-      .cookie("refreshToken", refreshToken, cookieOptions)
+      .cookie("acceessToken", AccessToken, cookieOptions)
+      .cookie("refreshToken", RefreshToken, cookieOptions)
       .json({
         message: "You Are Signed In SuccessFUlly.",
         user,
