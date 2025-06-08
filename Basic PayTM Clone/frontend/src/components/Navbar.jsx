@@ -1,11 +1,13 @@
 import React from "react";
+import { TbCoinRupeeFilled } from "react-icons/tb";
 
 const Navbar = () => {
   return (
     <>
       <nav className="bg-white shadow w-full h-14 flex justify-between items-center">
-        <div className="flex flex-col justify-center h-full ml-4 text-xl font-semibold">
-          Welcome, Kunal
+        <div className="flex items-center gap-2 text-blue-800 h-full ml-4 text-xl font-semibold">
+          <TbCoinRupeeFilled className="text-3xl" />
+          PayMENT
         </div>
         <div className="flex justify-center items-center">
           <div className="flex flex-col justify-center h-full mr-4">

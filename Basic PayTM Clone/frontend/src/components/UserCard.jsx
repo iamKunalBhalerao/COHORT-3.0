@@ -1,5 +1,7 @@
 import React from "react";
 import Button from "./Button";
+import { LuSend } from "react-icons/lu";
+import { Link } from "react-router-dom";
 
 const UserCard = ({ user, index }) => {
   return (
@@ -22,7 +24,15 @@ const UserCard = ({ user, index }) => {
         </div>
 
         <div className="flex flex-col justify-center items-center h-full">
-          <Button lable={"send Money"} />
+          <button
+            // onClick={onClick}
+            type="button"
+            className="w-full cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4"
+          >
+            <Link to={"/send"} className="flex items-center gap-2">
+              <LuSend /> send Money
+            </Link>
+          </button>
         </div>
       </div>
     </>
