@@ -1,9 +1,9 @@
 import React from "react";
-import Button from "./Button";
 import { LuSend } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const UserCard = ({ user, index }) => {
+  const navigate = useNavigate();
   return (
     <>
       <div
@@ -25,13 +25,13 @@ const UserCard = ({ user, index }) => {
 
         <div className="flex flex-col justify-center items-center h-full">
           <button
-            // onClick={onClick}
+            onClick={() => {
+              navigate(`/send?id=${user._id}&name=${user.firstName}`);
+            }}
             type="button"
-            className="w-full cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4"
+            className="w-full flex gap-2 items-center cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4"
           >
-            <Link to={"/send"} className="flex items-center gap-2">
-              <LuSend /> send Money
-            </Link>
+            <LuSend /> send Money
           </button>
         </div>
       </div>
