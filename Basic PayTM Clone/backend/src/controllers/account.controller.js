@@ -64,6 +64,7 @@ const transferFunds = async (req, res) => {
 
     res.status(200).json({
       message: "Funds Transfer Successfully",
+      amount: amount,
     });
   } catch (error) {
     res.status(403).json({

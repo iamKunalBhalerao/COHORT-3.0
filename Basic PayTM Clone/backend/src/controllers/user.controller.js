@@ -75,6 +75,8 @@ const signup = async (req, res) => {
         message:
           "You are Successfully Signed Up || With 1000 Rs. Account Bonus.",
         user,
+        AccessToken,
+        RefreshToken,
         account,
       });
   } catch (error) {
@@ -142,8 +144,8 @@ const signin = async (req, res) => {
       .json({
         message: "You Are Signed In SuccessFUlly.",
         user,
-        accessToken,
-        refreshToken,
+        AccessToken,
+        RefreshToken,
       });
   } catch (error) {
     res.status(403).json({
@@ -280,8 +282,8 @@ const searchFriend = async (req, res) => {
 
     res.status(200).json({
       user: users.map((user) => ({
-        FirstName: user.firstName,
-        LastName: user.lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
         _id: user._id,
       })),
     });

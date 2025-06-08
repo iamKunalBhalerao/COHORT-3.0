@@ -15,7 +15,7 @@ userRouter.route("/signup").post(signup);
 userRouter.route("/signin").post(signin);
 userRouter.route("/refreshtokens").post(refreshAccessAndRefreshToken);
 userRouter.route("/update").put(authMiddleware, updateUser);
-userRouter.route("/searchfriend").get(authMiddleware, searchFriend);
+userRouter.route("/bulk").get(searchFriend);
 userRouter.route("/bulk").get(allUsers);
 
 export default userRouter;
