@@ -295,6 +295,29 @@ const searchFriend = async (req, res) => {
   }
 };
 
+const getUserDetails = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const user = await User.findById(userId);
+
+    const account = await Account.findOne({ userId: userId });
+
+    res.status(200).json({
+      message: "User Data Fetched SuccessFully",
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      balance: account.balance,
+    });
+  } catch (error) {
+    res.status(502).json({
+      message: "Something Went Wrong While finding user !!!",
+      Error: error,
+    });
+  }
+};
+
 const allUsers = async (req, res) => {
   try {
     const users = await User.find({}).select("-password -refreshToken");
@@ -315,4 +338,5 @@ export {
   updateUser,
   searchFriend,
   allUsers,
+  getUserDetails,
 };

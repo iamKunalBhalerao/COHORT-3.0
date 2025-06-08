@@ -5,12 +5,15 @@ import InputBox from "../components/InputBox";
 import Button from "../components/Button";
 import ButtonWarning from "../components/ButtonWarning";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -64,9 +67,8 @@ const Signup = () => {
                     password,
                   }
                 );
-                console.log(response.data.AccessToken);
-
                 localStorage.setItem("AccessToken", response.data.AccessToken);
+                navigate("/dashboard");
               }}
               lable={"Sign Up"}
             />

@@ -1,7 +1,6 @@
-import React from "react";
 import { TbCoinRupeeFilled } from "react-icons/tb";
 
-const Navbar = () => {
+const Navbar = ({ firstName }) => {
   return (
     <>
       <nav className="bg-white shadow w-full h-14 flex justify-between items-center">
@@ -11,10 +10,12 @@ const Navbar = () => {
         </div>
         <div className="flex justify-center items-center">
           <div className="flex flex-col justify-center h-full mr-4">
-            Hello, Kunal
+            Hello, {firstName}
           </div>
           <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
-            <div className="flex flex-col justify-center h-full text-xl">K</div>
+            <div className="flex flex-col justify-center h-full text-xl">
+              {firstName[0]}
+            </div>
           </div>
         </div>
       </nav>
