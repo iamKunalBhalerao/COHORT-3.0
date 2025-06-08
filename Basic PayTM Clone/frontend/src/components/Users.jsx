@@ -1,40 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserCard from "./UserCard";
 import { RiSearch2Line } from "react-icons/ri";
+import axios from "axios";
 
 const Users = () => {
-  const [users, setUsers] = useState([
-    {
-      firstName: "Kunal",
-      lastName: "Bhalerao",
-      id: 1,
-    },
-    {
-      firstName: "Prem",
-      lastName: "Borawake",
-      id: 2,
-    },
-    {
-      firstName: "Anand",
-      lastName: "Salunke",
-      id: 3,
-    },
-    {
-      firstName: "Kunal",
-      lastName: "Bhalerao",
-      id: 4,
-    },
-    {
-      firstName: "Prem",
-      lastName: "Borawake",
-      id: 5,
-    },
-    {
-      firstName: "Anand",
-      lastName: "Salunke",
-      id: 6,
-    },
-  ]);
+  const [users, setUsers] = useState([]);
+  const [filter, setFilter] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
+      .then((response) => {
+        // console.log(response.data.user);
+        setUsers(response.data.user);
+      });
+  }, [filter]);
 
   return (
     <>
@@ -46,6 +26,9 @@ const Users = () => {
       <div className="p-4 flex items-center gap-2">
         <RiSearch2Line className="text-xl font-normal" />
         <input
+          onChange={(e) => {
+            setFilter(e.target.value);
+          }}
           type="text"
           name="search"
           placeholder={"SearchYour Friend Hear..."}
@@ -53,8 +36,8 @@ const Users = () => {
         />
       </div>
       <div>
-        {users.map((user) => (
-          <UserCard user={user} />
+        {users.map((user, index) => (
+          <UserCard user={user} key={index} />
         ))}
       </div>
     </>

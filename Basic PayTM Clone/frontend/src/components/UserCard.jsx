@@ -1,10 +1,13 @@
 import React from "react";
 import Button from "./Button";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, index }) => {
   return (
     <>
-      <div className="flex justify-between my-2 mx-4 p-2 bg-white rounded-xl shadow-xl">
+      <div
+        key={index}
+        className="flex justify-between my-2 mx-4 p-2 bg-white rounded-xl shadow-xl"
+      >
         <div className="flex items-center">
           <div className="rounded-full h-12 w-12 bg-slate-200 flex items-center justify-center mt-1 mr-2">
             <div className="flex flex-col justify-center h-fulltext-xl">
