@@ -15,6 +15,20 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
+  async function signupHandler() {
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/user/signup",
+      {
+        firstName,
+        lastName,
+        email,
+        password,
+      }
+    );
+    localStorage.setItem("AccessToken", response.data.AccessToken);
+    navigate("/dashboard");
+  }
+
   return (
     <>
       <div className="bg-slate-300 h-screen flex justify-center">
@@ -31,6 +45,7 @@ const Signup = () => {
               lable={"First Name"}
               placeholder={"Jhon"}
               type={"text"}
+              required
             />
             <InputBox
               onChange={(e) => {
@@ -39,6 +54,7 @@ const Signup = () => {
               lable={"Last Name"}
               placeholder={"Doe"}
               type={"text"}
+              required
             />
             <InputBox
               onChange={(e) => {
@@ -47,6 +63,7 @@ const Signup = () => {
               lable={"Email"}
               placeholder={"example@example.com"}
               type={"email"}
+              required
             />
             <InputBox
               onChange={(e) => {
@@ -55,23 +72,9 @@ const Signup = () => {
               lable={"Password"}
               placeholder={"123456"}
               type={"password"}
+              required
             />
-            <Button
-              onClick={async () => {
-                const response = await axios.post(
-                  "http://localhost:3000/api/v1/user/signup",
-                  {
-                    firstName,
-                    lastName,
-                    email,
-                    password,
-                  }
-                );
-                localStorage.setItem("AccessToken", response.data.AccessToken);
-                navigate("/dashboard");
-              }}
-              lable={"Sign Up"}
-            />
+            <Button onClick={signupHandler} lable={"Sign Up"} />
             <ButtonWarning
               lable={"Alredy have an account?"}
               buttonText={"Sign-In"}

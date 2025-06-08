@@ -9,6 +9,10 @@ const signup = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
 
+    if (!firstName || !lastName || !email || !password) {
+      throw "All Fields are Required !!!";
+    }
+
     const requireBody = zod.object({
       firstName: zod.string().min(3).max(100),
       lastName: zod.string().min(3).max(100),
@@ -19,7 +23,7 @@ const signup = async (req, res) => {
     const parseRequireBody = requireBody.safeParse(req.body);
 
     if (!parseRequireBody.success) {
-      throw "Invalid Credentials !!!";
+      throw `Invalid Credentials !!!`;
     }
 
     const findUser = await User.findOne({ email: email });
