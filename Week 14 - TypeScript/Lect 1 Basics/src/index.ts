@@ -45,6 +45,57 @@ callAnotherFn(greet);
 */
 
 // TS Config Means
+/*
+const greet = (name) => console.log("Hello Wolrd")
+greet("kunal")
+*/
 
-const greet = () => console.log("Hello Wolrd")
-greet()
+// Interfaces in TypeScript
+/*
+interface userType {
+  name: string,
+  age: number,
+};
+
+const user = {
+  name: "Kunal",
+  age: 21,
+};
+
+function greet(user: userType) {
+  console.log(`Hello ${user.name}, You are age is ${user.age}`);
+}
+
+greet(user);
+*/
+
+// Types in TypeScript
+/*
+type sumInput = number
+
+
+function sum(a: sumInput, b: sumInput){
+  console.log(a + b)
+}
+
+sum(2, 4)*/
+
+// interface Example
+
+interface Employee {
+  name: string;
+  age: number;
+}
+
+interface Manager {
+  name: string;
+  department: string;
+}
+
+type company = Employee & Manager
+
+let t: company = {
+  name: "Kunal",
+  age: 21,
+  department: "IT",
+}
