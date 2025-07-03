@@ -1,3 +1,4 @@
+/*
 interface Address {
     city?: string; // Make any type, key, field otpional uisng "?"
     state: string;
@@ -43,3 +44,24 @@ if (ans) {
 } else {
   console.log("I am Illigle to Drink.");
 }
+*/
+
+// Function inside Interface and their type
+interface Person {
+  name: string;
+  age: number;
+  greet: () => string;
+  num: () => number;
+}
+
+const person: Person = {
+  name: "Kunal",
+  age: 21,
+  greet() {
+    return `Hello my name is ${this.name}, I am ${this.age} years old.`;
+  },
+  num() {
+    return this.age;
+  },
+};
+console.log(person.greet());
