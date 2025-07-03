@@ -47,6 +47,7 @@ if (ans) {
 */
 
 // Function inside Interface and their type
+/*
 interface Person {
   name: string;
   age: number;
@@ -65,3 +66,60 @@ const person: Person = {
   },
 };
 console.log(person.greet());
+*/
+
+// How ot use class in Interface
+/*
+interface Person {
+  name: string;
+  age: number;
+  greet(name: string): string;
+}
+
+class Manager implements Person {
+  name: string;
+  age: number;
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet(name: string) {
+    return `Your name is ${name}`;
+  }
+}
+
+let obj = new Manager("Kunal", 21);
+let greet = obj.greet("Kunal");
+console.log(greet)
+*/
+
+// Types in TS
+
+type Employee = {
+  name: string;
+  age: number;
+};
+
+type Manager = {
+  name: string;
+  role: string;
+};
+
+type Company = Employee & Manager;
+
+let e: Employee = {
+    name: "Kunal",
+    age: 21
+}
+
+let m: Manager = {
+    name: "Bhalerao",
+    role: "SDE2"
+}
+
+let c: Company = {
+    name: "Tata Consaltancy Services PVT",
+    age: 22,
+    role: "TCS"
+}
