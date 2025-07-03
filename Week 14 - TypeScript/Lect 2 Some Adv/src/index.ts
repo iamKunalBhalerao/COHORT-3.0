@@ -95,7 +95,7 @@ console.log(greet)
 */
 
 // Types in TS
-
+/*
 type Employee = {
   name: string;
   age: number;
@@ -123,3 +123,46 @@ let c: Company = {
     age: 22,
     role: "TCS"
 }
+*/
+
+// union in Types
+/*
+type GoodUser = {
+  name: string;
+  age: number;
+};
+
+type BadUser = {
+  name: string;
+  id: number;
+};
+
+type User = GoodUser | BadUser;
+
+let user: User = {
+  name: "Kunal",
+  age: 21,
+  id: 1,
+};
+*/
+
+// Intersection in Types
+/*
+type GoodUser = {
+  name: string;
+  age: number;
+};
+
+type BadUser = {
+  name: string;
+  id: number;
+};
+
+type User = GoodUser & BadUser;
+
+let user: User = {
+  name: "Kunal",
+  age: 21,
+  id: 1,
+};
+*/
