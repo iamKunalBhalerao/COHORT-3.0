@@ -166,3 +166,70 @@ let user: User = {
   id: 1,
 };
 */
+
+/*
+interface User {
+  name: string;
+  div: string;
+};
+
+interface Admin {
+    name: string;
+    id: number
+}
+
+type Classroom = User | Admin;
+
+function greet(user: Classroom) {
+    return `Welcome ${user.name}`
+}
+
+let user: User = {
+    name: "User",
+    div: "A"
+}
+
+let admin: Admin = {
+    name: "Admin",
+    id: 1
+}
+
+console.log(greet(user));
+console.log(greet(admin));
+*/
+
+// Arrays in TypeScript
+
+interface User {
+  name: string;
+  age: number;
+}
+
+let user1: User = {
+  name: "Kunal",
+  age: 21,
+};
+
+let user2: User = {
+  name: "Prem",
+  age: 12,
+};
+
+let user3: User = {
+  name: "Omkar",
+  age: 18,
+};
+
+function isLeagle(users: User[]) {
+  return users.filter((x) => x.age >= 18);
+}
+
+let ans = isLeagle([user1, user2, user3]);
+// console.log(ans);
+
+function usersName(user: string[]) {
+  return user;
+}
+
+const ans2 = usersName(["Kunal", "Prem", "Tejas", "Omkar"]);
+console.log(ans2);
