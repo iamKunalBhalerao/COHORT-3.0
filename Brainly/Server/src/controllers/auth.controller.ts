@@ -1,11 +1,34 @@
-export const signupController = async (req: any, res: any) => {
-  res.send("This is Signup Endpoint");
-};
+import AsyncHandler from "../utils/AsyncHandler";
+import { Request, Response, NextFunction } from "express";
 
-export const signinController = async (req: any, res: any) => {
-  res.send("This is Signin Endpoint");
-};
+export const signupController = AsyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { username, email, password } = req.body;
 
-export const logoutController = async (req: any, res: any) => {
-  res.send("This is logout Endpoint");
-};
+      res.send("This is Signup Endpoint");
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+export const signinController = AsyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.send("This is Signin Endpoint");
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+export const logoutController = AsyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.send("This is logout Endpoint");
+    } catch (err) {
+      next(err);
+    }
+  }
+);

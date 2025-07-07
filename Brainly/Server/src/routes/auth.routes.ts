@@ -3,12 +3,12 @@ import {
   logoutController,
   signinController,
   signupController,
-} from "../controllers/auth.controller.js";
+} from "../controllers/auth.controller";
 
-const userRouter = Router();
+const authRouter = Router();
 
-userRouter.route("/signup").post(signupController);
-userRouter.route("/signin").post(signinController);
-userRouter.route("/logout").post(logoutController);
+authRouter.route("/signup").post(signupController);
+authRouter.route("/signin").post(signinController);
+authRouter.route("/logout").post(logoutController);
 
-export default userRouter;
+export default authRouter;

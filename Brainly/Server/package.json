@@ -8,26 +8,34 @@
   ],
   "license": "ISC",
   "author": "Kunal Bhalerao",
-  "type": "module",
   "main": "index.ts",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "start": "dotenvx run -f .env.production -- node dist/index.js",
+    "dev": "dotenvx run -f .env.development -- nodemon",
+    "build": "npx tsc -b",
+    "start:env:encrypt": "dotenvx encrypt -f .env.production"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "^1.45.2",
+    "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "dotenv": "^17.0.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.1",
-    "typescript": "^5.8.3"
+    "ts-node-dev": "^2.0.0",
+    "zod": "^3.25.75"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
-    "nodemon": "^3.1.10"
+    "@types/mongoose": "^5.11.96",
+    "@types/node": "^24.0.10",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }

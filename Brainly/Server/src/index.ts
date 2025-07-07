@@ -1,5 +1,5 @@
-import app from "./app.ts";
-import connectDB from "./db/db.ts";
+import app from "./app";
+import connectDB from "./db/db";
 
 connectDB()
   .then(() => {
