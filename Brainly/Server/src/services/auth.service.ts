@@ -1,13 +1,15 @@
 import z from "zod";
-import bcrypt from "bcrypt";
 import ApiError from "../ApiHandlers/ApiError";
 import {
   createUserInDB,
+  findUserByEmail,
+  findUserByEmailAndComparePassword,
   findUserById,
   findUserByUsernameAndEmail,
 } from "../dao/auth.dao";
 import { generateAccessAndRefreshToken } from "../utils/generateTokens";
 
+// Signup Endpoint starts Here
 const signupSchema = z.object({
   username: z
     .string()
@@ -21,6 +23,7 @@ const signupSchema = z.object({
 });
 type signupInput = z.infer<typeof signupSchema>;
 
+// Signup Service
 export const signupService = async (data: any) => {
   try {
     if (!data.username || !data.email || !data.password) {
@@ -38,41 +41,64 @@ export const signupService = async (data: any) => {
       user.username,
       user.email
     );
-
     if (findUser) {
       throw new ApiError(401, "Username or Email is Alredy Exists!");
     }
 
-    const hashedPassword = await bcrypt.hash(user.password, 10);
-
     const createdUser = await createUserInDB(
       user.username,
       user.email,
-      hashedPassword
+      user.password
     );
-
-    if (!createdUser) {
-      throw new ApiError(400, "Error While Creating User!");
-    }
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
       createdUser._id
     );
 
-    if (!accessToken || !refreshToken) {
-      throw new ApiError(502, "AccessToken and RefreshToken is not Found");
-    }
-
     const finalUser = await findUserById(createdUser._id);
-    if(!finalUser) {
-        throw new ApiError(501, "Something went wrong !!!")
+    if (!finalUser) {
+      throw new ApiError(501, "Something went wrong !!!");
     }
-
-    finalUser.refreshToken = refreshToken;
-    await finalUser.save({ validateBeforeSave: false });
-
 
     return { user: finalUser, accessToken, refreshToken };
+  } catch (err) {
+    throw err;
+  }
+};
+
+// Signin Endpoint starts Here
+const signinSchema = z.object({
+  email: z.string().email("Invalid Email"),
+  password: z
+    .string()
+    .max(100),
+});
+type signinInput = z.infer<typeof signinSchema>;
+
+// Signin Service
+export const signinService = async (data: any) => {
+  try {
+    if (!data.email || !data.password) {
+      throw new ApiError(400, "All Fields Are Required!");
+    }
+
+    const result = signinSchema.safeParse(data);
+    if (!result.success) {
+      throw result.error;
+    }
+
+    const user: signinInput = result.data;
+
+    const findUser = await findUserByEmailAndComparePassword(
+      user.email,
+      user.password
+    );
+
+    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
+      findUser._id
+    );
+
+    return { user: findUser, accessToken, refreshToken };
   } catch (err) {
     throw err;
   }

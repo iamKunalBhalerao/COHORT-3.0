@@ -1,6 +1,8 @@
-const jwt  = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+import ApiError from "../ApiHandlers/ApiError";
+import { findUserById } from "../dao/auth.dao";
 
-export const generateAccessAndRefreshToken = (userId: any) => {
+export const generateAccessAndRefreshToken = async (userId: any) => {
   const accessSecret = process.env.ACCESSTOKEN_JWT_SECRET as string;
   const refreshSecret = process.env.REFRESHTOKEN_JWT_SECRET as string;
   const accessExpiry = process.env.ACCESSTOKEN_EXPIREY as string;
@@ -16,5 +18,14 @@ export const generateAccessAndRefreshToken = (userId: any) => {
   const refreshToken = jwt.sign({ _id: userId }, refreshSecret, {
     expiresIn: refreshExpiry,
   });
+
+  const finalUser = await findUserById(userId);
+  if (!finalUser) {
+    throw new ApiError(501, "Something went wrong !!!");
+  }
+
+  finalUser.refreshToken = refreshToken;
+  await finalUser.save({ validateBeforeSave: false });
+
   return { accessToken, refreshToken };
 };

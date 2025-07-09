@@ -1,5 +1,6 @@
 import { Document, Schema, model } from "mongoose";
 import { generateGravatar } from "../utils/generateGravatar";
+import bcrypt from "bcrypt";
 
 export interface IUser extends Document {
   username: string;
@@ -7,6 +8,7 @@ export interface IUser extends Document {
   password: string;
   avatar: string;
   refreshToken: string;
+  comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser>({
@@ -43,6 +45,10 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-const User = model<IUser>("User", userSchema);
+userSchema.methods.comparePassword = async function (password: string) {
+  return await bcrypt.compare(password, this.password);
+};
+
+const User = model("User", userSchema);
 
 export default User;
