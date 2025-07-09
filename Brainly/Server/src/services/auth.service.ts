@@ -1,4 +1,5 @@
 import z from "zod";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import ApiError from "../ApiHandlers/ApiError";
 import {
   createUserInDB,
@@ -69,9 +70,7 @@ export const signupService = async (data: any) => {
 // Signin Endpoint starts Here
 const signinSchema = z.object({
   email: z.string().email("Invalid Email"),
-  password: z
-    .string()
-    .max(100),
+  password: z.string().max(100),
 });
 type signinInput = z.infer<typeof signinSchema>;
 
@@ -99,6 +98,32 @@ export const signinService = async (data: any) => {
     );
 
     return { user: findUser, accessToken, refreshToken };
+  } catch (err) {
+    throw err;
+  }
+};
+
+// Refresh Tokens Service
+export const refreshTokensService = async (token: any) => {
+  try {
+    const decoded = jwt.verify(
+      token,
+      process.env.REFRESHTOKEN_JWT_SECRET as string
+    );
+
+    const user = await findUserById((decoded as JwtPayload)._id);
+    if (!user) {
+      throw new ApiError(404, "User not found");
+    }
+
+    if (!user.refreshToken || user.refreshToken !== token) {
+      throw new ApiError(401, "Invalid refresh token");
+    }
+
+    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
+      user._id
+    );
+    return { accessToken, refreshToken };
   } catch (err) {
     throw err;
   }

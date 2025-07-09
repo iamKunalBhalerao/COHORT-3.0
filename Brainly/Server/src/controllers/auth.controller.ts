@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 import { AsyncHandler } from "../ApiHandlers/AsyncHandler";
+import ApiError from "../ApiHandlers/ApiError";
 import ApiResponse from "../ApiHandlers/ApiResponse";
-import { signinService, signupService } from "../services/auth.service";
+import {
+  refreshTokensService,
+  signinService,
+  signupService,
+} from "../services/auth.service";
 import { cookieOptions } from "../utils/helper";
 
 interface CookieOption {
@@ -61,6 +66,27 @@ export const logoutController = AsyncHandler(
       .json({
         success: true,
         message: "Logout successful",
+      });
+  }
+);
+
+export const refreshTokensController = AsyncHandler(
+  async (req: Request, res: Response) => {
+    const token = req.cookies?.refreshToken;
+    if (!token) {
+      throw new ApiError(401, "No refresh token provided");
+    }
+
+    const { accessToken, refreshToken } = await refreshTokensService(token);
+
+    res
+      .status(200)
+      .cookie("accessToken", accessToken, cookieOptions as CookieOption)
+      .cookie("refreshToken", refreshToken, cookieOptions as CookieOption)
+      .json({
+        success: true,
+        message: "Tokens refreshed successfully",
+        data: { accessToken, refreshToken },
       });
   }
 );
