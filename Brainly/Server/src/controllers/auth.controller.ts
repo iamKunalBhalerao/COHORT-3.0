@@ -90,3 +90,17 @@ export const refreshTokensController = AsyncHandler(
       });
   }
 );
+
+export const isAuthenticatedController = AsyncHandler(
+  async (req: Request, res: Response) => {
+    const user = req.user; // Assuming user is set in middleware
+
+    if (!user) {
+      throw new ApiError(401, "User not authenticated");
+    }
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, "User is authenticated", { user }));
+  }
+);

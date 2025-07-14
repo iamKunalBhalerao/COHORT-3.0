@@ -16,7 +16,7 @@ interface Data {
 export const createContentService = async (data: Data) => {
   try {
     if (!data.title || !data.link || !data.userId) {
-      throw new ApiError(400, "Title, link, and userId are required fields.");
+      throw new ApiError(400, "All Fields Are are required fields.");
     }
 
     const userId =
