@@ -1,7 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import SecondaryButton from "./SecontaryButton";
-import PrimaryButton from "./PrimaryButton";
+import Button from "./ui/Button";
 
 const Navbar = () => {
   return (
@@ -14,8 +12,20 @@ const Navbar = () => {
           <Link to="/dashboard">Go to Dashboard</Link>
         </div>
         <div className="flex gap-2">
-          <SecondaryButton to={"/auth/signup"} label={"Sign Up"} />
-          <PrimaryButton to={"/auth"} label={"Sign In"} />
+          <Button
+            onClick={() => alert("Sign Up Message")}
+            variant={"secondary"}
+            size={"md"}
+            >
+            Sign Up
+          </Button>
+          <Button
+            onClick={() => alert("Sign In Message")}
+            variant={"primary"}
+            size={"md"}
+          >
+            Sign In
+          </Button>
         </div>
       </div>
     </>
