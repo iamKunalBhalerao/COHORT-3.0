@@ -7,7 +7,7 @@ import { BsCameraVideoOffFill } from "react-icons/bs";
 import { IoDocuments } from "react-icons/io5";
 import { FaLink } from "react-icons/fa";
 import { FaHashtag } from "react-icons/fa";
-import { IoOpen } from "react-icons/io5";
+import { RiMenuUnfoldLine } from "react-icons/ri";
 
 const Sidebar = () => {
   const [collaps, setCollaps] = useState(false);
@@ -36,9 +36,7 @@ const Sidebar = () => {
         } bg-blue-950 border-r-1 border-blue-500 text-white flex flex-col transition-all duration-300 ease-in-out`}
       >
         <div className="p-4 flex justify-between items-center">
-          {collaps ? (
-            <p className="text-3xl font-black cursor-pointer">B.</p>
-          ) : (
+          {!collaps && (
             <p className="text-3xl font-black cursor-pointer">Brainly</p>
           )}
           {collaps ? (
@@ -46,7 +44,7 @@ const Sidebar = () => {
               onClick={() => setCollaps(!collaps)}
               className="pl-2 cursor-pointer"
             >
-              <IoOpen className="text-white text-2xl font-black" />
+              <RiMenuUnfoldLine className="text-white text-3xl font-black" />
             </button>
           ) : (
             <button

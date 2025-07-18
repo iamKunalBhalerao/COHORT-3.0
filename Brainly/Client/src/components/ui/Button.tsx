@@ -80,9 +80,9 @@ const Button: React.FC<ButtonProps> = ({
           </svg>
         ) : (
           <>
-            {startIcon && <span className="mr-2">{startIcon}</span>}
+            {startIcon && <span className="mr-2 text-2xl">{startIcon}</span>}
             {children}
-            {endIcon && <span className="ml-2">{endIcon}</span>}
+            {endIcon && <span className="ml-2 text-2xl">{endIcon}</span>}
           </>
         )}
       </button>

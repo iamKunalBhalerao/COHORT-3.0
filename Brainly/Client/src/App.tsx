@@ -20,27 +20,31 @@ import Videos from "./pages/dashboard/Videos";
 import Documents from "./pages/dashboard/Documents";
 import Links from "./pages/dashboard/Links";
 import Tags from "./pages/dashboard/Tags";
+import DashboardHome from "./pages/dashboard/DashboardHome";
 
 const App = () => {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
-        </Route>
-        <Route path="/auth" element={<AuthLayout />}>
-          <Route index element={<Signin />} />
-          <Route path="/auth/signup" element={<Signup />} />
-        </Route>
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="/dashboard/all" element={<Dashboard />} />
-          <Route path="/dashboard/tweets" element={<Tweets />} />
-          <Route path="/dashboard/videos" element={<Videos />} />
-          <Route path="/dashboard/docs" element={<Documents />} />
-          <Route path="/dashboard/links" element={<Links />} />
-          <Route path="/dashboard/tags" element={<Tags />} />
-        </Route>
-      </Routes>
+      <div className="font-[gilroy]">
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} />
+          </Route>
+          <Route path="/auth" element={<AuthLayout />}>
+            <Route index element={<Signin />} />
+            <Route path="/auth/signup" element={<Signup />} />
+          </Route>
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route path="/dashboard/all" element={<Dashboard />} />
+            <Route index element={<DashboardHome />} />
+            <Route path="/dashboard/tweets" element={<Tweets />} />
+            <Route path="/dashboard/videos" element={<Videos />} />
+            <Route path="/dashboard/docs" element={<Documents />} />
+            <Route path="/dashboard/links" element={<Links />} />
+            <Route path="/dashboard/tags" element={<Tags />} />
+          </Route>
+        </Routes>
+      </div>
     </>
   );
 };
