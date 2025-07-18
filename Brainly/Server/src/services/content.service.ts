@@ -67,7 +67,7 @@ export const deleteContentService = async (
 ) => {
   try {
     if (!contentId) {
-      throw new ApiError(400, "Content is Required !");
+      throw new ApiError(400, "No Content found !");
     }
 
     await deleteContentFromDB(contentId);

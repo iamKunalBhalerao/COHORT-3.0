@@ -12,15 +12,17 @@ app.use(cors());
 app.use(cookieParser());
 
 // Route Imports
+import { errorMiddleware } from "./middlewares/globalErrorHandler";
 import authRouter from "./routes/auth.routes";
 import userRouter from "./routes/user.routes";
 import contentRouter from "./routes/content.routes";
-import { errorMiddleware } from "./middlewares/globalErrorHandler";
+import brainRouter from "./routes/brain.routes";
 
 // Route Declaration
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/content", contentRouter);
+app.use("/api/v1/brain", brainRouter);
 
 app.get("/health", (req, res) => {
   res.status(200).json({
