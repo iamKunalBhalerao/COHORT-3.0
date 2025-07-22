@@ -4,7 +4,7 @@ import Button from "./ui/Button";
 const Navbar = () => {
   return (
     <>
-      <div className="flex justify-between items-center py-4 px-4 bg-transparent">
+      <div className="w-full fixed bg-white flex justify-between items-center py-4 px-4 border-b-1 border-b-slate-200">
         <Link to={"/"} className="text-2xl font-bold text-blue-700">
           Brainly
         </Link>
@@ -16,7 +16,7 @@ const Navbar = () => {
             onClick={() => alert("Sign Up Message")}
             variant={"secondary"}
             size={"md"}
-            >
+          >
             Sign Up
           </Button>
           <Button

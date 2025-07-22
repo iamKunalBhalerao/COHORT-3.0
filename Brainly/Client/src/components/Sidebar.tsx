@@ -1,17 +1,19 @@
 import React, { useState, type ReactElement } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { LuBrainCircuit } from "react-icons/lu";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { VscChromeClose } from "react-icons/vsc";
 import { MdSpaceDashboard } from "react-icons/md";
 import { BsTwitterX } from "react-icons/bs";
-import { BsCameraVideoOffFill } from "react-icons/bs";
 import { IoDocuments } from "react-icons/io5";
 import { FaLink } from "react-icons/fa";
 import { FaHashtag } from "react-icons/fa";
 import { RiMenuUnfoldLine } from "react-icons/ri";
+import { FaYoutube } from "react-icons/fa";
 
 const Sidebar = () => {
   const [collaps, setCollaps] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   interface NavItem {
     name: string;
@@ -22,7 +24,7 @@ const Sidebar = () => {
   const navItems: NavItem[] = [
     { name: "Dashboard", path: "all", icon: <MdSpaceDashboard /> },
     { name: "Tweets", path: "tweets", icon: <BsTwitterX /> },
-    { name: "Videos", path: "videos", icon: <BsCameraVideoOffFill /> },
+    { name: "Videos", path: "videos", icon: <FaYoutube /> },
     { name: "Documents", path: "docs", icon: <IoDocuments /> },
     { name: "Links", path: "links", icon: <FaLink /> },
     { name: "Tags", path: "tags", icon: <FaHashtag /> },
@@ -37,7 +39,13 @@ const Sidebar = () => {
       >
         <div className="p-4 flex justify-between items-center">
           {!collaps && (
-            <p className="text-3xl font-black cursor-pointer">Brainly</p>
+            <p
+              onClick={() => navigate("/dashboard")}
+              className="text-3xl flex gap-2 items-center font-black cursor-pointer"
+            >
+              <LuBrainCircuit />
+              Brainly
+            </p>
           )}
           {collaps ? (
             <button
@@ -69,13 +77,14 @@ const Sidebar = () => {
               }`}
             >
               {collaps ? (
-                <span className="text-center">{tab.icon}</span>
+                <span className="text-center text-xl">{tab.icon}</span>
               ) : (
                 <span
-                  className={`transition-opacity duration-300 ${
+                  className={`transition-opacity flex items-center gap-2 text-xl duration-300 ${
                     collaps ? "opacity-0 w-0" : "opacity-100 w-full"
                   }`}
                 >
+                  {tab.icon}
                   {tab.name}
                 </span>
               )}
