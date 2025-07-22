@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "./ui/Button";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="w-full fixed bg-white flex justify-between items-center py-4 px-4 border-b-1 border-b-slate-200">
@@ -13,14 +14,14 @@ const Navbar = () => {
         </div>
         <div className="flex gap-2">
           <Button
-            onClick={() => alert("Sign Up Message")}
+            onClick={() => navigate("/auth/signup")}
             variant={"secondary"}
             size={"md"}
           >
             Sign Up
           </Button>
           <Button
-            onClick={() => alert("Sign In Message")}
+            onClick={() => navigate("/auth")}
             variant={"primary"}
             size={"md"}
           >
