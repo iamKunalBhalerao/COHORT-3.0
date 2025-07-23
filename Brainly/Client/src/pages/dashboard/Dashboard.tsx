@@ -5,10 +5,21 @@ import { IoMdAdd } from "react-icons/io";
 import Card from "../../components/ui/Card";
 import CreateContentModel from "../../components/CreateContentModel";
 import ShareBrainModal from "../../components/ShareBrainModal";
+import useContent from "../../Hooks/useContent";
+import { FaLocationArrow } from "react-icons/fa";
+
+export interface Content {
+  title: string;
+  link: string;
+}
 
 const Dashboard = () => {
   const [addContentTaggle, setAddContentTaggle] = useState(false);
   const [shareBrainToggle, setShareBrainToggle] = useState(false);
+
+  const contents = useContent();
+
+  console.log(contents);
 
   const toggleAddContentModal = () => {
     setAddContentTaggle(!addContentTaggle);
@@ -34,16 +45,23 @@ const Dashboard = () => {
         startIcon2={<IoMdAdd />}
       />
       <div className="gap-2 flex flex-wrap justify-center">
-        <Card
-          title={"Tweet"}
-          link={"https://x.com/Pratikwebtech/status/1947125916980674798"}
-          type={"tweet"}
-        />
-        <Card
-          title={"Youtube"}
-          link={"https://youtu.be/rJORiMZe2hA?si=TsQ42PzOwYMJQA5t"}
-          type={"youtube"}
-        />
+        {contents.length !== 0 ? (
+          contents.map((item: Content, index) => (
+            <Card
+              key={index}
+              title={item.title}
+              link={item.link}
+              type={item.link.startsWith("https://x.com") ? "tweet" : "youtube"}
+            />
+          ))
+        ) : (
+          <div className="w-full mt-20 md:mt-30 flex items-center justify-center">
+            <h1 className="flex items-center gap-4 text-4xl text-center text-blue-800 font-bold">
+              Create Your First Content onClicking Add Content Button{" "}
+              <FaLocationArrow />
+            </h1>
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoArrowBackSharp } from "react-icons/io5";
 import Button from "./ui/Button";
 import { MdContentCopy } from "react-icons/md";
 import { MdOutlineErrorOutline } from "react-icons/md";
+import { axiosInstance } from "../utils/AxiosInstance";
 
 interface ShareBrainProps {
   onClick: () => void;
 }
 
 const ShareBrainModal = ({ onClick }: ShareBrainProps) => {
+  const [shortUrl, setShortUrl] = useState("");
+
+  const submitHandler = async () => {
+    try {
+      const { data } = await axiosInstance.post("/brain/share", {
+        share: true,
+      });
+      setShortUrl(`http://localhost:3000/api/v1/brain/${data.data.shortUrl}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    submitHandler();
+  }, []);
+
   return (
     <>
       <div className="fixed w-full h-screen flex items-center justify-center inset-0 z-55 bg-slate-400/50 backdrop-blur-sm">
@@ -27,7 +45,15 @@ const ShareBrainModal = ({ onClick }: ShareBrainProps) => {
             with others. They'll be able to inport your content into their own
             second brain
           </p>
-          <Button variant="primary" size="md" fullWidth startIcon={<MdContentCopy />}>
+          <div className="p-2 w-full rounded-xl my-2 text-xl font-medium border-1 border-zinc-200">
+            {shortUrl}
+          </div>
+          <Button
+            variant="primary"
+            size="md"
+            fullWidth
+            startIcon={<MdContentCopy />}
+          >
             Share Brain
           </Button>
           <p className="text-lg py-2 text-gray-500 flex items-center gap-2">
