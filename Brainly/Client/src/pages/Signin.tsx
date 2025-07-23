@@ -4,11 +4,15 @@ import Button from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackSharp } from "react-icons/io5";
 import axios, { AxiosError } from "axios";
+import { FaEyeSlash } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
 const Signin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showErrorToast, setShowErrorToast] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
   const emailRef = useRef<HTMLInputElement>(null);
@@ -64,6 +68,10 @@ const Signin = () => {
     }
   };
 
+  const showPaswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       {showErrorToast && (
@@ -80,11 +88,22 @@ const Signin = () => {
         </div>
         <div className="w-full md:w-1/4 bg-white p-4 flex flex-col items-center rounded-xl shadow">
           <h1 className="text-4xl font-bold mb-4 text-blue-950">Sign In</h1>
-          <Input type={"email"} placeholder={"Enter Email"} ref={emailRef} />
           <Input
-            type={"password"}
+            type={"email"}
+            placeholder={"Enter Email"}
+            inputRef={emailRef}
+          />
+          <Input
+            type={showPassword ? "text" : "password"}
             placeholder={"Enter Password"}
-            ref={passwordRef}
+            inputRef={passwordRef}
+            endIcon={
+              showPassword ? (
+                <FaEye className="text-xl cursor-pointer" onClick={showPaswordToggle} />
+              ) : (
+                <FaEyeSlash className="text-xl cursor-pointer" onClick={showPaswordToggle} />
+              )
+            }
           />
           <p className="text-md text-blue-600 cursor-pointer self-start p-2">
             Forgot Password ?

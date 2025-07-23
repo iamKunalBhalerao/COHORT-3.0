@@ -80,7 +80,7 @@ const CreateContentModel = ({ onClick }: CreateContentProps) => {
             Add Content
           </h1>
           <Input
-            ref={titleRef}
+            inputRef={titleRef}
             type={"text"}
             onChange={() => {
               return null;
@@ -88,7 +88,7 @@ const CreateContentModel = ({ onClick }: CreateContentProps) => {
             placeholder={"Enter Title"}
           />
           <Input
-            ref={linkRef}
+            inputRef={linkRef}
             type={"text"}
             onChange={() => {
               return null;

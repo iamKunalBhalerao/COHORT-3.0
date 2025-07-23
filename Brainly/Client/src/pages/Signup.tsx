@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
 import { IoArrowBackSharp } from "react-icons/io5";
 import axios, { AxiosError } from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showErrorToast, setShowErrorToast] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const usernameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -48,18 +50,26 @@ const Signup = () => {
     } catch (err) {
       setLoading(false);
       showError();
-  if (err instanceof AxiosError) {
-    if (err.response?.data?.message === "Validation Error") {
-      setError(err.response.data.errors?.[0]?.message || "Validation failed");
-    } else {
-      setError(err.response?.data?.message || "An error occurred during signin");
+      if (err instanceof AxiosError) {
+        if (err.response?.data?.message === "Validation Error") {
+          setError(
+            err.response.data.errors?.[0]?.message || "Validation failed"
+          );
+        } else {
+          setError(
+            err.response?.data?.message || "An error occurred during signin"
+          );
+        }
+      } else {
+        setError("An unexpected error occurred");
+      }
+    } finally {
+      setLoading(false);
     }
-  } else {
-    setError("An unexpected error occurred");
-  }
-} finally {
-  setLoading(false);
-}
+  };
+
+  const showPasswordToggle = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -78,9 +88,34 @@ const Signup = () => {
         </div>
         <div className="w-full md:w-1/4 bg-white p-4 flex flex-col items-center rounded-xl shadow">
           <h1 className="text-4xl font-bold mb-4 text-blue-950">Sign In</h1>
-          <Input type={"text"} placeholder={"Enter Username"} ref={usernameRef} />
-          <Input type={"email"} placeholder={"Enter Email"} ref={emailRef} />
-          <Input type={"password"} placeholder={"Enter Password"} ref={passwordRef} />
+          <Input
+            type={"text"}
+            placeholder={"Enter Username"}
+            inputRef={usernameRef}
+          />
+          <Input
+            type={"email"}
+            placeholder={"Enter Email"}
+            inputRef={emailRef}
+          />
+          <Input
+            type={showPassword ? "text" : "password"}
+            placeholder={"Enter Password"}
+            inputRef={passwordRef}
+            endIcon={
+              showPassword ? (
+                <FaEye
+                  className="text-xl cursor-pointer"
+                  onClick={showPasswordToggle}
+                />
+              ) : (
+                <FaEyeSlash
+                  className="text-xl cursor-pointer"
+                  onClick={showPasswordToggle}
+                />
+              )
+            }
+          />
           <Button
             loading={loading}
             onClick={signupHandler}
