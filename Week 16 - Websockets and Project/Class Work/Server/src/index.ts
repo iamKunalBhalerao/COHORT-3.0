@@ -9,7 +9,7 @@ wss.on("connection", (socket) => {
     if (e.toString() === "ping") {
       socket.send("pong");
     } else {
-      socket.send("Chal na Ping Bhej")
+      socket.send("Kuch bhi mat bhej");
     }
   });
 });
