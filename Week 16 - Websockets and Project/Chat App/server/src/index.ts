@@ -7,7 +7,7 @@ interface User {
   room: string;
 }
 
-let allSockets: User[] = [];
+const allSockets: User[] = [];
 
 wss.on("connection", (socket) => {
   socket.on("message", (message) => {
@@ -16,27 +16,20 @@ wss.on("connection", (socket) => {
     if (parsedMessage.type === "join") {
       allSockets.push({
         socket,
-        room: parsedMessage.payload.rooomId,
+        room: parsedMessage.payload.roomId,
       });
     }
 
     if (parsedMessage.type === "chat") {
-      const currentUserRoom = allSockets.find((x) => x.socket == socket);
-
-      // // OR
-      // let currentUserRoom = null;
-      // for (let i = 0; i < allSockets.length; i++) {
-      //   if (allSockets[i].socket == socket) {
-      //     currentUserRoom = allSockets[i].room;
-      //   }
-      // }
+      const currentUserRoom = allSockets.find((x) => x.socket == socket)?.room;
 
       for (let i = 0; i < allSockets.length; i++) {
-        if (
-          allSockets[i].room == currentUserRoom?.room &&
-          allSockets[i].socket !== socket
-        ) {
-          allSockets[i].socket.send(parsedMessage.payload.message);
+        if (allSockets[i].room == currentUserRoom) {
+          allSockets[i].socket === socket
+            ? allSockets[i].socket.send(
+                "You Send : " + parsedMessage.payload.message
+              )
+            : allSockets[i].socket.send(parsedMessage.payload.message);
         }
       }
     }
