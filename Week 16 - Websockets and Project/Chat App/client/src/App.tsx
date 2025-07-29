@@ -1,9 +1,11 @@
-import React from "react";
+import ChatBox from "./components/ChatBox";
 
 const App = () => {
   return (
     <>
-      <h1>Hello World</h1>
+    <div className="w-full h-screen bg-slate-900 flex items-center justify-center">
+      <ChatBox />
+    </div>
     </>
   );
 };
