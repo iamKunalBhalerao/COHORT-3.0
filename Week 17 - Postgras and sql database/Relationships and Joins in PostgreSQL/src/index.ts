@@ -49,7 +49,7 @@ app.post("/signup", async (req, res) => {
   }
 
   // PostgreSQL Query to create a Foreign key relationships
-/*
+  /*
   CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(55) UNIQUE NOT NULL,
@@ -70,6 +70,8 @@ app.post("/signup", async (req, res) => {
   )
 */
 
+  await pgClient.query(`BEGIN;`); // Begin of transaction
+
   const insertUserQuery = `INSERT INTO users(username, email, password) VALUES($1, $2, $3) RETURNING *`;
   const insertAddressQuery = `INSERT INTO addresses(user_id, city, country, street, pincode) VALUES($1, $2, $3, $4, $5) RETURNING *`;
 
@@ -89,12 +91,7 @@ app.post("/signup", async (req, res) => {
     addressValues
   );
 
-  if (!userResponse || !addressResponse) {
-    return res.status(400).json({
-      success: false,
-      messsage: "Something went Wrong!",
-    });
-  }
+  await pgClient.query(`COMMIT;`); // End of transaction
 
   res
     .status(200)
@@ -111,6 +108,30 @@ app.post("/signup", async (req, res) => {
         address: { ...addressResponse.rows[0] },
       },
     });
+});
+
+app.get("/metadata", async (req, res) => {
+  const id = req.query.id;
+
+  // const query1 = `SELECT id,username,email,created_at FROM users WHERE id=$1`;
+  // const res1 = await pgClient.query(query1, [id]);
+
+  // const query2 = `SELECT * FROM addresses WHERE user_id=$1`;
+  // const res2 = await pgClient.query(query2, [id]);
+
+  // Joins in PostgreSQL
+  const joinQuery = `
+  SELECT users.id, users.username, users.email, users.created_at, addresses.city, addresses.country, addresses.street, addresses.pincode, addresses.created_at
+  FROM users 
+  JOIN addresses ON users.id = addresses.user_id
+  WHERE users.id=$1 
+  `;
+
+  const response = await pgClient.query(joinQuery, [id]);
+
+  res.status(200).json({
+    data: response.rows[0],
+  });
 });
 
 app.post("/create-todo", async (req, res) => {
@@ -135,18 +156,9 @@ app.post("/create-todo", async (req, res) => {
 
   const insertTodoQuery = `INSERT INTO todos(user_id, title, description) VALUES($1, $2, $3)`;
   const todoValues = [user_id, title, description];
-
   const response = await pgClient.query(insertTodoQuery, todoValues);
 
-  if (!response) {
-    return res.status(400).json({
-      success: false,
-      message: "Something Went Wrong!",
-    });
-  }
-
   const searchTodosQuery = `SELECT * FROM todos WHERE user_id=$1`;
-
   const { rows } = await pgClient.query(searchTodosQuery, [user_id]);
 
   res.status(200).json({
