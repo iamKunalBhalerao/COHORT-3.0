@@ -14,6 +14,7 @@ model Users {
   password   String
   age        Int
   created_at DateTime @default(now())
+  todos      Todo[]
 }
 
 model Addresses {
@@ -25,11 +26,12 @@ model Addresses {
   created_at DateTime @default(now())
 }
 
-model Todos {
+model Todo {
   id          Int      @id @default(autoincrement())
   title       String
   description String
   done        Boolean  @default(false)
-  user_id     Int
   created_at  DateTime @default(now())
+  userId      Int
+  user        Users    @relation(fields: [userId], references: [id])
 }

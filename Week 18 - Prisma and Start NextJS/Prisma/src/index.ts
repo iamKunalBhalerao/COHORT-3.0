@@ -32,14 +32,12 @@ app.post("/signup", async (req, res) => {
       success: true,
       message: response,
     });
-
-    //
-    //
-    //
-    //
-    //
   } catch (err) {
-    console.log(err);
+    res.status(400).json({
+      success: false,
+      message: "something went wrong!",
+      Error: err,
+    });
   }
 });
 
@@ -64,12 +62,6 @@ app.post("/deleteuser", async (req, res) => {
       success: true,
       message: response,
     });
-
-    //
-    //
-    //
-    //
-    //
   } catch (err) {
     res.status(400).json({
       success: false,
@@ -122,10 +114,8 @@ app.get("/details", async (req, res) => {
       where: {
         email: email,
       },
-      select: {
-        username: true,
-        email: true,
-        age: true,
+      include: {
+        todos: true,
       },
     });
 
