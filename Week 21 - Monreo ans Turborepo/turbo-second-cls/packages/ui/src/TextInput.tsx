@@ -5,7 +5,7 @@ interface TextInputProps {
   placeholder: string;
   className?: string;
   value?: string;
-  onChange?: () => void;
+  onChange?: any;
 }
 
 export default function TextInput({
