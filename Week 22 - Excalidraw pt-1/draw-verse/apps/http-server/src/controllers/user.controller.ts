@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { env } from "@repo/env";
+import { createRoomSchema, signInUserSchema, signUpUserSchema } from "@repo/common/types";
 
 interface SignUpUser {
   name: string;
@@ -14,6 +15,15 @@ type SignUpRequest = Request<{}, {}, SignUpUser>;
 export const signupController = async (req: SignUpRequest, res: Response) => {
   try {
     const { name, email, password } = req.body;
+
+    const data = signUpUserSchema.safeParse(req.body);
+
+    if (!data.success) {
+      return res.status(400).json({
+        success: false,
+        message: "Incorrect Inputs!",
+      });
+    }
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -51,6 +61,15 @@ export const signinController = async (req: SignInRequest, res: Response) => {
   try {
     const { email, password } = req.body;
 
+    const data = signInUserSchema.safeParse(req.body);
+
+    if (!data.success) {
+      return res.status(400).json({
+        success: false,
+        message: "Incorrect Inputs!",
+      });
+    }
+
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -83,24 +102,31 @@ export const signinController = async (req: SignInRequest, res: Response) => {
       message: "Internal Server error.",
       Error: error.message,
     });
-}
+  }
 };
 
 export const createRoomController = async (req: Request, res: Response) => {
-    try{
+  try {
+    const roomId = Math.floor(Math.random() * 9999 + 1000);
 
-      const roomId = Math.floor(Math.random() * 9999 + 1000)
+    const data = createRoomSchema.safeParse(req.body)
 
-     res.status(201).json({
+    if(!data.success) {
+      return res.status(400).json({
+        message: "Incorrect inputs!"
+      })
+    }
+
+    res.status(201).json({
       success: true,
       message: "Room created successfully",
-      roomId
-    }); 
-    }catch(error: any){
-        res.status(500).json({
-          success: false,
-          message: "Internal Server error.",
-          Error: error.message,
-        });
-    }
-}
+      roomId,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server error.",
+      Error: error.message,
+    });
+  }
+};

@@ -27,12 +27,12 @@ importers:
 
   apps/http-server:
     dependencies:
+      '@repo/common':
+        specifier: workspace:^
+        version: link:../../packages/common
       '@repo/env':
         specifier: workspace:^
         version: link:../../packages/env
-      '@repo/typescript-config':
-        specifier: workspace:^
-        version: link:../../packages/typescript-config
       '@t3-oss/env-core':
         specifier: ^0.13.8
         version: 0.13.8(typescript@5.9.3)(zod@4.1.13)
@@ -55,6 +55,9 @@ importers:
         specifier: ^4.1.13
         version: 4.1.13
     devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:^
+        version: link:../../packages/typescript-config
       '@types/bcrypt':
         specifier: ^6.0.0
         version: 6.0.0
@@ -119,9 +122,6 @@ importers:
       '@repo/env':
         specifier: workspace:^
         version: link:../../packages/env
-      '@repo/typescript-config':
-        specifier: workspace:^
-        version: link:../../packages/typescript-config
       '@t3-oss/env-core':
         specifier: ^0.13.8
         version: 0.13.8(typescript@5.9.3)(zod@4.1.13)
@@ -141,6 +141,9 @@ importers:
         specifier: ^4.1.13
         version: 4.1.13
     devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:^
+        version: link:../../packages/typescript-config
       '@types/express':
         specifier: ^5.0.6
         version: 5.0.6
@@ -160,11 +163,18 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/env:
+  packages/common:
     dependencies:
+      zod:
+        specifier: ^4.1.13
+        version: 4.1.13
+    devDependencies:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+
+  packages/env:
+    dependencies:
       '@t3-oss/env-core':
         specifier: ^0.13.8
         version: 0.13.8(typescript@5.9.3)(zod@4.1.13)
@@ -175,6 +185,9 @@ importers:
         specifier: ^4.1.13
         version: 4.1.13
     devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
       '@types/node':
         specifier: ^20.10.0
         version: 20.19.27
