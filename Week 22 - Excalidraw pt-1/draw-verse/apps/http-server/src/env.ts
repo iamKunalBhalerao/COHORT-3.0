@@ -4,7 +4,6 @@ import path from "path";
 import z from "zod";
 import { baseServerSchema } from "@repo/env";
 
-// Resolve .env relative to this file so Turbo/pnpm root runs still pick it up
 config({ path: path.join(__dirname, "../.env") });
 
 export const env = createEnv({

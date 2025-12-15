@@ -1,6 +1,7 @@
+import { env } from "@repo/env";
 import { WebSocketServer } from "ws";
 
-const wss = new WebSocketServer({ port: 8080 });
+const wss = new WebSocketServer({ port: env.WS_PORT });
 
 wss.on("connection", function connection(ws, request) {
 

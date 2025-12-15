@@ -7,7 +7,8 @@ config({ path: path.join(__dirname, "../.env") });
 
 export const baseServerSchema = {
   // Environment
-  PORT: z.coerce.number().positive().default(3001),
+  HTTP_PORT: z.coerce.number().positive().default(3001),
+  WS_PORT: z.coerce.number().positive().default(8080),
   // Database
   DATABASE_URL: z.string().url(),
   // JWT SECRETS
