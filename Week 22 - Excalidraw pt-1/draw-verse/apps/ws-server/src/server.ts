@@ -2,16 +2,19 @@ import { WebSocketServer } from "ws";
 
 const wss = new WebSocketServer({ port: 8080 });
 
-wss.on("connection", (ws) => {
+wss.on("connection", function connection(ws, request) {
+
+  const url = request.url
+
+  if(!url) {
+    return 
+  }
+
+  const queryParams = new URLSearchParams(url.split("?")[1])
+  const token = queryParams.get("token")
+
   ws.on("message", (message) => {
     ws.send(`Your Message: ${message}`);
   });
 
-  ws.on("close", () => {
-    ws.send("Cliend Offline");
-  });
-
-  ws.on("error", (error) => {
-    console.error(`Websocket Error: ${error}`);
-  });
 });

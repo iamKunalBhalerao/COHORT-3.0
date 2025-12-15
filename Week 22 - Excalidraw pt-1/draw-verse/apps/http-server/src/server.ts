@@ -1,15 +1,6 @@
-import express, { Express, Request, Response } from "express"
+import { env } from "@repo/env";
+import app from "./app";
 
-const app: Express = express();
-
-app.use(express.json())
-
-app.get("/", (req: Request, res: Response) => {
-    res.status(200).json({
-        message: "Everything is OK"
-    })
-})
-
-app.listen(3001, () => {
-    console.log("HTTP-Server is running...")
-})
+app.listen(env.PORT, () => {
+  console.log(`HTTP Server is running on PORT:${env.PORT}`);
+});
