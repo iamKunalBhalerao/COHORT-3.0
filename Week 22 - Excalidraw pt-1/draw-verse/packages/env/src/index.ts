@@ -7,10 +7,11 @@ config({ path: path.join(__dirname, "../.env") });
 
 export const baseServerSchema = {
   // Environment
+  NODE_ENV: z.string(),
   HTTP_PORT: z.coerce.number().positive().default(3001),
   WS_PORT: z.coerce.number().positive().default(8080),
   // Database
-  DATABASE_URL: z.string().url(),
+  DATABASE_URL: z.url(),
   // JWT SECRETS
   JWT_SECRET: z.string().min(32, "JWT_SECRET must be at least 32 characters"),
 };
