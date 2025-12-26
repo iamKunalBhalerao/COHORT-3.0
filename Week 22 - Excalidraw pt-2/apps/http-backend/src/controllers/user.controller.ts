@@ -174,17 +174,66 @@ export const createRoomController = async (
     }
 
     const { roomName } = parsedData.data;
+    const adminId = req.user?.id;
+    if (!adminId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unautharized Request!",
+      });
+    }
+
+    const room = await prismaClient.room.create({
+      data: {
+        slug: roomName,
+        adminId,
+      },
+    });
 
     res.status(200).json({
       success: true,
       message: "Room is Created SuccessFully.",
-      roomName,
+      room,
     });
   } catch (error: any) {
     res.status(500).json({
       success: false,
       message: "Internal server error!",
       Error: error.messsage,
+    });
+  }
+};
+
+export const getRoomMessages = async (req: Request, res: Response) => {
+  try {
+    const roomId = Number(req.params.roomId);
+
+    if (!roomId) {
+      return res.status(400).json({
+        success: false,
+        message: "Room Id is Invalid",
+      });
+    }
+
+    const messages = await prismaClient.chat.findMany({
+      where: {
+        roomId,
+      },
+      orderBy: {
+        id: "desc",
+      },
+      take: 50,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Messages fetched successfyll of this room.",
+      messages,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error!",
+      Error: error.message,
     });
   }
 };

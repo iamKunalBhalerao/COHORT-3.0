@@ -115,6 +115,9 @@ importers:
 
   apps/ws-backend:
     dependencies:
+      '@repo/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       '@repo/env':
         specifier: workspace:*
         version: link:../../packages/env
