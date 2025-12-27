@@ -237,3 +237,42 @@ export const getRoomMessages = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const findRoomBySlug = async (req: Request, res: Response) => {
+  try {
+    const slug = req.params.slug;
+
+    if (!slug) {
+      return res.status(400).json({
+        success: false,
+        message: "Room Id is Invalid",
+      });
+    }
+
+    const room = await prismaClient.room.findFirst({
+      where: {
+        slug,
+      },
+    });
+
+    if (!room) {
+      return res.status(400).json({
+        success: false,
+        message: "Room not Found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Room fetched successfyll of this room.",
+      slug: room.slug,
+      roomId: room.id,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error!",
+      Error: error.message,
+    });
+  }
+};

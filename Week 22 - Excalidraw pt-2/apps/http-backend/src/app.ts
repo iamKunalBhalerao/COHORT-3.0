@@ -1,12 +1,14 @@
 import express, { Request, Response, type Express } from "express";
 import userRouter from "./routes/user.routes";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app: Express = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors());
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("Welcome to Chat App!");
