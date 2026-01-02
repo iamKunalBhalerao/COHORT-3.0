@@ -12,5 +12,9 @@ export const signInZodSchema = z.object({
 });
 
 export const createRoomZodSchema = z.object({
-  roomName: z.string().min(3, "Room Name should contain minimum 3 letters.").max(150, "Room Name should contain maximum 150 letters.")
-})
+  roomName: z
+    .string()
+    .min(3, "Room Name should contain minimum 3 letters.")
+    .max(150, "Room Name should contain maximum 150 letters."),
+});
+

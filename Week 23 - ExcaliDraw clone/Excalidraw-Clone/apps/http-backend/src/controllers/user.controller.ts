@@ -3,6 +3,7 @@ import {
   signInZodSchema,
   signUpZodSchema,
 } from "@repo/common/zod.types";
+import { httpCookieOption } from "@repo/common/common";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import prismaClient from "@repo/database";
@@ -57,7 +58,7 @@ export const signUpController = async (req: SignUpRequest, res: Response) => {
       });
     }
 
-    const token = jwt.sign(
+    const token = await jwt.sign(
       { id: user?.id, email: user?.email },
       env.JWT_SECRET,
       {
@@ -65,7 +66,7 @@ export const signUpController = async (req: SignUpRequest, res: Response) => {
       }
     );
 
-    res.cookie("token", token).status(200).json({
+    res.cookie("token", token, httpCookieOption).status(200).json({
       success: true,
       message: "Signed Up Successfull.",
       id: user?.id,
@@ -118,7 +119,7 @@ export const signInController = async (req: SignInRequest, res: Response) => {
       });
     }
 
-    const token = jwt.sign(
+    const token = await jwt.sign(
       { id: user?.id, email: user?.email },
       env.JWT_SECRET,
       {
@@ -126,7 +127,7 @@ export const signInController = async (req: SignInRequest, res: Response) => {
       }
     );
 
-    res.cookie("token", token).status(200).json({
+    res.cookie("token", token, httpCookieOption).status(200).json({
       success: true,
       message: "Signed Ip Successfull.",
       id: user?.id,
