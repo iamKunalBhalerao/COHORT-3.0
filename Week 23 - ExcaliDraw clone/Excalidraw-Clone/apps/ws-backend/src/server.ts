@@ -86,11 +86,13 @@ wss.on("connection", async (ws, request) => {
                 type: "chat",
                 message: message,
                 roomId,
+                userId: isAuth
               })
             );
           }
         });
       }
+
     });
   } catch (error: any) {
     console.log(error);

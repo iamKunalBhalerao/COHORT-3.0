@@ -183,6 +183,19 @@ export const createRoomController = async (
       });
     }
 
+    const isRoomExists = await prismaClient.room.findFirst({
+      where: {
+        slug: roomName
+      }
+    })
+
+    if (isRoomExists) {
+      return res.status(400).json({
+        success: false,
+        message: "Room Alredy Exists!"
+      })
+    }
+
     const room = await prismaClient.room.create({
       data: {
         slug: roomName,
@@ -199,7 +212,7 @@ export const createRoomController = async (
     res.status(500).json({
       success: false,
       message: "Internal server error!",
-      Error: error.messsage,
+      Error: error,
     });
   }
 };
