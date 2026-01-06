@@ -3,6 +3,7 @@ import { initDraw } from "@/draw";
 import { useEffect, useRef, useState } from "react";
 import { FaRegCircle, FaRegSquare } from "react-icons/fa";
 import { LuEraser } from "react-icons/lu";
+import { TbPencil } from "react-icons/tb";
 
 export default function Canvas({
   roomId,
@@ -76,6 +77,12 @@ export default function Canvas({
           >
             <FaRegCircle />
           </button>
+          {/* <button
+            onClick={() => setTool("pencil")}
+            className={`p-2 cursor-pointer rounded-lg ${tool === "pencil" ? "bg-blue-500 text-white" : "bg-white text-black"} text-xl shadow`}
+          >
+            <TbPencil />
+          </button> */}
           <button
             onClick={clearCanvas}
             className={`p-2 cursor-pointer rounded-lg text-xl shadow hover:bg-blue-500 text-black duration-200 ease-in-out`}

@@ -1,5 +1,4 @@
 import JoinRoom from '@/components/JoinRoom'
-import Link from 'next/link'
 import React from 'react'
 
 const page = () => {

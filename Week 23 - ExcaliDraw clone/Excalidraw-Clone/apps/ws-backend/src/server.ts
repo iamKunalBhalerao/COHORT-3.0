@@ -56,14 +56,12 @@ wss.on("connection", async (ws, request) => {
         const user = users.find((user) => user.ws === ws);
         if (!user || !user.rooms) return;
         user.rooms.push(parsedData.roomId);
-        ws.send("You Joined the room");
       }
 
       if (parsedData.type === "leave_room") {
         const user = users.find((user) => user.ws === ws);
         if (!user || !user.rooms) return;
         user.rooms = user.rooms.filter((x) => x !== parsedData.roomId);
-        ws.send(`You Leaved the Room: ${parsedData.roomId}`);
       }
 
       if (parsedData.type === "chat") {

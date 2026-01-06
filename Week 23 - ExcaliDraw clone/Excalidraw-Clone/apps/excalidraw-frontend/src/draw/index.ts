@@ -97,7 +97,7 @@ export async function initDraw({
     if (mouseMoveHandler) {
       canvas.removeEventListener("mousemove", mouseMoveHandler);
     }
-    
+
     mouseDownHandler = (e: MouseEvent) => {
       isDrawing = true;
       startX = e.clientX;
