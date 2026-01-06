@@ -8,7 +8,7 @@ export default function Canvas({
   roomId,
   socket,
 }: {
-  roomId: number;
+  roomId: string;
   socket: WebSocket;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);

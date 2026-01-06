@@ -22,7 +22,7 @@ model Chat {
   id        Int      @id @default(autoincrement())
   message   String
   userId    String
-  roomId    Int
+  roomId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
@@ -31,7 +31,7 @@ model Chat {
 }
 
 model Room {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   slug      String   @unique
   adminId   String
   createdAt DateTime @default(now())

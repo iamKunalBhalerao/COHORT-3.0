@@ -219,7 +219,7 @@ export const createRoomController = async (
 
 export const getRoomMessages = async (req: Request, res: Response) => {
   try {
-    const roomId = Number(req.params.roomId);
+    const roomId = req.params.roomId;
 
     if (!roomId) {
       return res.status(400).json({

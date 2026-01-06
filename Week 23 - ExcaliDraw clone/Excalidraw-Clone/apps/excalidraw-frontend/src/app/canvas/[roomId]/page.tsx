@@ -21,7 +21,7 @@ export default async function page({
   return (
     <>
       <div>
-        <RoomCanvas roomId={Number(roomId)} userToken={token?.value} />
+        <RoomCanvas roomId={roomId} userToken={token?.value} />
       </div>
     </>
   );

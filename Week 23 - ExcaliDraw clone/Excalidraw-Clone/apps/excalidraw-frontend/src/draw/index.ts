@@ -6,7 +6,7 @@ interface InitDrawFnProps {
   canvas: HTMLCanvasElement;
   tool: "rect" | "circle";
   theme: "light" | "dark";
-  roomId: number;
+  roomId: string;
   socket: WebSocket;
 }
 
@@ -25,6 +25,11 @@ type Shape =
       radius: number;
     };
 
+let mouseDownHandler: ((e: MouseEvent) => void) | null = null;
+let mouseUpHandler: ((e: MouseEvent) => void) | null = null;
+let mouseMoveHandler: ((e: MouseEvent) => void) | null = null;
+let isSocketSetup = false;
+
 export async function initDraw({
   canvas,
   tool,
@@ -41,7 +46,31 @@ export async function initDraw({
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Join the room first!
+    if (!isSocketSetup) {
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(
+          JSON.stringify({
+            type: "join_room",
+            roomId: roomId,
+          })
+        );
+      } else {
+        socket.onopen = () => {
+          socket.send(
+            JSON.stringify({
+              type: "join_room",
+              roomId: roomId,
+            })
+          );
+        };
+      }
+    }
+
     // Web Socket Logic
+
+    socket.onmessage = null;
+
     socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
 
@@ -50,6 +79,7 @@ export async function initDraw({
         existingShapes.push(parsedShape);
         clearCanvas(existingShapes, canvas, ctx, rc, theme);
       }
+      isSocketSetup = true;
     };
 
     //  Finding coordinates Logic
@@ -58,13 +88,23 @@ export async function initDraw({
     let startX = 0;
     let startY = 0;
 
-    canvas.addEventListener("mousedown", (e: MouseEvent) => {
+    if (mouseDownHandler) {
+      canvas.removeEventListener("mousedown", mouseDownHandler);
+    }
+    if (mouseUpHandler) {
+      canvas.removeEventListener("mouseup", mouseUpHandler);
+    }
+    if (mouseMoveHandler) {
+      canvas.removeEventListener("mousemove", mouseMoveHandler);
+    }
+    
+    mouseDownHandler = (e: MouseEvent) => {
       isDrawing = true;
       startX = e.clientX;
       startY = e.clientY;
-    });
+    };
 
-    canvas.addEventListener("mouseup", (e: MouseEvent) => {
+    mouseUpHandler = (e: MouseEvent) => {
       isDrawing = false;
 
       const width = e.clientX - startX;
@@ -79,15 +119,11 @@ export async function initDraw({
           height,
         };
 
-        console.log(shape);
-
-        existingShapes.push(shape);
-
         socket.send(
           JSON.stringify({
             type: "chat",
             message: JSON.stringify(shape),
-            roomId: Number(roomId),
+            roomId: roomId,
           })
         );
       } else if (tool === "circle") {
@@ -100,19 +136,17 @@ export async function initDraw({
           radius,
         };
 
-        existingShapes.push(shape);
-
         socket.send(
           JSON.stringify({
             type: "chat",
             message: JSON.stringify(shape),
-            roomId: Number(roomId),
+            roomId: roomId,
           })
         );
       }
-    });
+    };
 
-    canvas.addEventListener("mousemove", (e: MouseEvent) => {
+    mouseMoveHandler = (e: MouseEvent) => {
       if (isDrawing) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -140,7 +174,11 @@ export async function initDraw({
           });
         }
       }
-    });
+    };
+
+    canvas.addEventListener("mousedown", mouseDownHandler);
+    canvas.addEventListener("mouseup", mouseUpHandler);
+    canvas.addEventListener("mousemove", mouseMoveHandler);
   } catch (error) {
     console.log(error);
   }
@@ -156,8 +194,8 @@ function clearCanvas(
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = theme === "light" ? "rgba(255, 255, 255)" : "rgba(0, 0, 0)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  console.log("reach here");
-  existingShapes.map((shape) => {
+
+  existingShapes.forEach((shape) => {
     if (shape.type === "rect") {
       rc.rectangle(shape.x, shape.y, shape.width, shape.height, {
         fill: "blue",
@@ -178,7 +216,7 @@ function clearCanvas(
   });
 }
 
-export async function getExistingShapes(roomId: number) {
+export async function getExistingShapes(roomId: string) {
   const res = await axios.get(
     `http://localhost:3003/api/v1/user/chats/${roomId}`
   );

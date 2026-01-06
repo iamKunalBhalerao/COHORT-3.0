@@ -7,7 +7,7 @@ export default function RoomCanvas({
   roomId,
   userToken,
 }: {
-  roomId: number;
+  roomId: string;
   userToken: string;
 }) {
   const [socket, setSocket] = useState<WebSocket | null>(null);
